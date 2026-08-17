@@ -112,10 +112,7 @@
             border: 1px solid rgba(0, 210, 255, 0.25);
         }
 
-        .timer-unit {
-            text-align: center;
-        }
-
+        .timer-unit { text-align: center; }
         .timer-num {
             font-family: 'Outfit', sans-serif;
             font-size: 2.2rem;
@@ -124,13 +121,7 @@
             line-height: 1;
         }
 
-        .timer-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            margin-top: 4px;
-        }
-
+        .timer-label { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
         .info-pill {
             display: flex;
             align-items: center;
@@ -303,7 +294,7 @@
 
         /* Map Section & Custom Search */
         #map-container {
-            height: 440px;
+            height: 460px;
             width: 100%;
             border-radius: var(--radius-md);
             overflow: hidden;
@@ -353,9 +344,7 @@
             outline: none;
         }
 
-        .search-input:focus {
-            border-color: var(--accent-ocean);
-        }
+        .search-input:focus { border-color: var(--accent-ocean); }
 
         .search-btn {
             padding: 12px 22px;
@@ -388,10 +377,7 @@
         .dist-card p { font-size: 0.85rem; color: var(--text-muted); }
 
         /* Budget Section & Interactive Input */
-        .budget-box {
-            padding: 25px;
-            margin-bottom: 40px;
-        }
+        .budget-box { padding: 25px; margin-bottom: 40px; }
 
         .budget-table {
             width: 100%;
@@ -406,12 +392,7 @@
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .budget-table th {
-            background: rgba(0, 210, 255, 0.1);
-            color: var(--accent-teal);
-            font-weight: 700;
-        }
-
+        .budget-table th { background: rgba(0, 210, 255, 0.1); color: var(--accent-teal); font-weight: 700; }
         .budget-table tr:hover { background: rgba(255, 255, 255, 0.03); }
 
         .actual-input {
@@ -438,10 +419,7 @@
             background: rgba(255, 209, 102, 0.08) !important;
         }
 
-        .diff-text {
-            font-size: 0.85rem;
-            font-weight: 700;
-        }
+        .diff-text { font-size: 0.85rem; font-weight: 700; }
         .diff-minus { color: var(--accent-emerald); }
         .diff-plus { color: var(--accent-coral); }
 
@@ -757,7 +735,7 @@
                     <div>
                         <span class="rank-badge">2위 추천</span>
                         <h3>🥈 OTS 렌터카</h3>
-                        <p>오키나와 최대 규모 전용 렌터카. 한국어 전용 가운터 및 사고 대처 우수.</p>
+                        <p>오키나와 최대 규모 전용 렌터카. 한국어 전용 카운터 및 사고 대처 우수.</p>
                     </div>
                     <a href="https://www.otsinternational.jp/otsrentacar/ko/" target="_blank" rel="noopener noreferrer" class="btn-link">
                         OTS 렌터카 예약 바로가기 ↗
@@ -783,24 +761,24 @@
             </div>
         </section>
 
-        <!-- 4. 숙소 주소 입력 & 동선 대화형 지도 -->
+        <!-- 4. 한국어 지도 & 숙소 주소 입력 동선 지도 -->
         <section style="margin-bottom: 45px;">
-            <h2 class="section-title">🗺️ 숙소 주소 검색 & 동선 대화형 지도 (Leaflet.js)</h2>
+            <h2 class="section-title">🗺️ 한국어 번역 지도 & 숙소 주소 동선 파악 (Google Maps KR)</h2>
             <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
-                숙소 주소(또는 호텔명/지역)를 직접 입력하시면 지도에 핀이 꽂히며 주변 명소까지의 이동 거리 및 시간이 계산됩니다.
+                지도의 모든 지역명/도로명이 <strong>한글(한국어)로 완전 번역 표기</strong>됩니다. 숙소 위치를 입력하여 주요 명소 동선을 확인하세요.
             </p>
 
             <!-- Custom Address Search Box -->
             <div class="search-address-box">
-                <input type="text" id="custom-address-input" class="search-input" placeholder="예: 힐튼 오키나와 차탄 리조트 또는 Naha, Okinawa" value="Hilton Okinawa Chatan Resort">
-                <button class="search-btn" onclick="searchCustomAddress()">📍 숙소 핀 꽂기</button>
+                <input type="text" id="custom-address-input" class="search-input" placeholder="예: 힐튼 오키나와 차탄 리조트 또는 오키나와 차탄" value="힐튼 오키나와 차탄 리조트">
+                <button class="search-btn" onclick="searchCustomAddress()">📍 한국어 지도에 숙소 핀 꽂기</button>
             </div>
 
             <div class="location-tabs">
-                <button class="loc-btn active" onclick="presetLocation('chatan')">📍 [추천] 중부 차탄 (아메리칸빌리지)</button>
-                <button class="loc-btn" onclick="presetLocation('onna')">📍 [추천] 중북부 은나 (선마리나/만좌모)</button>
-                <button class="loc-btn" onclick="presetLocation('naha')">📍 [추천] 남부 나하 (국제거리)</button>
-                <button class="loc-btn" onclick="presetLocation('motobu')">📍 [추천] 북부 모토부 (츄라우미)</button>
+                <button class="loc-btn active" onclick="presetLocation('chatan')">📍 [중부] 차탄 (아메리칸빌리지 주변)</button>
+                <button class="loc-btn" onclick="presetLocation('onna')">📍 [중북부] 은나 (선마리나/만좌모 주변)</button>
+                <button class="loc-btn" onclick="presetLocation('naha')">📍 [남부] 나하 (국제거리 주변)</button>
+                <button class="loc-btn" onclick="presetLocation('motobu')">📍 [북부] 모토부 (츄라우미 주변)</button>
             </div>
 
             <div class="glass-panel" style="padding: 15px;">
@@ -809,7 +787,7 @@
             </div>
         </section>
 
-        <!-- 5. 8인 3박 4일 예산안 & 실제 사용 금액 가계부 (Interactive Budgeting) -->
+        <!-- 5. 8인 3박 4일 예산안 & 실제 사용 금액 가계부 -->
         <section style="margin-bottom: 45px;">
             <h2 class="section-title">💰 8인 3박 4일 예산 및 실제 지출 가계부</h2>
             
@@ -996,10 +974,9 @@
             renderBudgetTable();
         }
 
-        // Map & Locations Setup
+        // Map & Locations Setup (Google Korean Tile Layer)
         let map;
         let markersGroup;
-        let hotelMarker;
 
         const mainAttractions = [
             { name: "🐋 츄라우미 수족관", lat: 26.6944, lng: 127.8779 },
@@ -1021,8 +998,10 @@
         function initMap() {
             map = L.map('map-container').setView([26.45, 127.8], 10);
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '&copy; OpenStreetMap contributors'
+            // Google Maps Korean Tile Layer (hl=ko for full Korean translated map tiles)
+            L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=ko', {
+                attribution: '&copy; Google Maps (한국어 표기 지적 지도)',
+                maxZoom: 20
             }).addTo(map);
 
             markersGroup = L.layerGroup().addTo(map);
@@ -1090,7 +1069,7 @@
                 L.marker([attr.lat, attr.lng], { icon: attrIcon }).addTo(markersGroup);
 
                 const distKm = getDistanceKm(lat, lng, attr.lat, attr.lng);
-                const estMin = Math.round(distKm * 1.5 + 5); // Est driving time
+                const estMin = Math.round(distKm * 1.5 + 5);
 
                 return `
                     <div class="dist-card">
