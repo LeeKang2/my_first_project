@@ -376,7 +376,7 @@
         .dist-card h4 { font-size: 0.95rem; color: var(--accent-teal); margin-bottom: 4px; }
         .dist-card p { font-size: 0.85rem; color: var(--text-muted); }
 
-        /* Budget Section & Interactive Input & Save Controls */
+        /* Budget Section & Smart Multi-Receipt Inputs */
         .budget-box { padding: 25px; margin-bottom: 40px; }
 
         .budget-control-bar {
@@ -432,61 +432,180 @@
             font-weight: 600;
         }
 
-        .budget-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-            font-size: 0.93rem;
+        /* Category Item Card Block */
+        .category-budget-block {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            margin-bottom: 16px;
         }
 
-        .budget-table th, .budget-table td {
-            padding: 12px 14px;
-            text-align: left;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        .category-budget-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .budget-table th { background: rgba(0, 210, 255, 0.1); color: var(--accent-teal); font-weight: 700; }
-        .budget-table tr:hover { background: rgba(255, 255, 255, 0.03); }
+        .category-name-box h3 {
+            font-size: 1.1rem;
+            color: var(--text-main);
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-        .actual-input {
-            width: 120px;
+        .category-name-box span {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .category-sum-box {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .sum-badge {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--accent-emerald);
+            background: rgba(6, 214, 160, 0.1);
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(6, 214, 160, 0.3);
+        }
+
+        .btn-add-receipt {
+            background: rgba(0, 210, 255, 0.15);
+            color: var(--accent-teal);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-add-receipt:hover {
+            background: rgba(0, 210, 255, 0.3);
+        }
+
+        /* Sub-Receipt Line Row */
+        .sub-receipt-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            margin-bottom: 8px;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 12px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .formatted-amount-input {
+            width: 140px;
             padding: 7px 10px;
             background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(0, 210, 255, 0.4);
             border-radius: 6px;
             color: var(--accent-emerald);
-            font-weight: 700;
-            font-size: 0.9rem;
+            font-weight: 800;
+            font-size: 0.95rem;
             outline: none;
+            text-align: right;
         }
 
-        .memo-input {
-            width: 100%;
-            max-width: 220px;
-            padding: 6px 10px;
-            background: rgba(0, 0, 0, 0.4);
-            border: 1px solid var(--border-glass);
-            border-radius: 6px;
-            color: var(--text-main);
-            font-size: 0.82rem;
-            outline: none;
-        }
-
-        .memo-input:focus, .actual-input:focus {
+        .formatted-amount-input:focus {
             border-color: var(--accent-teal);
             box-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
         }
 
-        .total-row {
-            font-weight: 800;
-            font-size: 1.1rem;
-            color: var(--accent-gold);
-            background: rgba(255, 209, 102, 0.08) !important;
+        .memo-input {
+            flex-grow: 1;
+            min-width: 160px;
+            padding: 7px 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.85rem;
+            outline: none;
         }
 
-        .diff-text { font-size: 0.85rem; font-weight: 700; }
-        .diff-minus { color: var(--accent-emerald); }
-        .diff-plus { color: var(--accent-coral); }
+        .memo-input:focus {
+            border-color: var(--accent-teal);
+        }
+
+        /* Quick Amount Add Buttons */
+        .quick-btn-group {
+            display: flex;
+            gap: 4px;
+        }
+
+        .q-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: var(--accent-gold);
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .q-btn:hover {
+            background: var(--accent-gold);
+            color: #000;
+        }
+
+        .btn-del-sub {
+            background: rgba(255, 107, 107, 0.15);
+            color: var(--accent-coral);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        .btn-del-sub:hover {
+            background: rgba(255, 107, 107, 0.3);
+        }
+
+        .overall-summary-card {
+            background: rgba(255, 209, 102, 0.08);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            border-radius: var(--radius-md);
+            padding: 18px 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .summary-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-gold);
+        }
+
+        .summary-values {
+            display: flex;
+            gap: 20px;
+            font-weight: 800;
+            font-size: 1.05rem;
+        }
 
         /* Toast notification */
         .toast {
@@ -879,9 +998,9 @@
             </div>
         </section>
 
-        <!-- 5. 8인 3박 4일 예산안 & 비밀번호 인증 GitHub 저장 시스템 -->
+        <!-- 5. 8인 3박 4일 예산안 & 스마트 다중 영수증 / 쉬운 입력 시스템 -->
         <section style="margin-bottom: 45px;">
-            <h2 class="section-title">💰 8인 3박 4일 가계부 & 비밀번호 인증 GitHub 저장 시스템</h2>
+            <h2 class="section-title">💰 8인 3박 4일 가계부 (다중 분할 결제 & 쉬운 숫자 입력)</h2>
             
             <div class="glass-panel budget-box">
                 <!-- Action Control Bar -->
@@ -897,24 +1016,20 @@
                 </div>
 
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    * 🔒 <strong>[비밀번호로 GitHub에 저장]</strong>을 누르시고 지정 비밀번호를 입력하시면 `data/receipts.json` 파일로 자동 생성/업데이트되어 온 가족이 어디서나 함께 볼 수 있습니다.
+                    * 💡 <strong>분할 결제 기능</strong>: 각 항목별로 <code>[+ 결제 추가]</code> 버튼을 누르면 분할 결제 내역(항공권 나눔 결제 등)을 여러 개 추가할 수 있습니다.<br>
+                    * 💡 <strong>쉬운 숫자 입력</strong>: 금액 입력 시 <strong>천 단위 쉼표(,)</strong>가 자동 표시되며, <code>[+1만]</code> <code>[+10만]</code> <code>[+50만]</code> <code>[+100만]</code> 버튼으로 쉽게 금액을 추가할 수 있습니다.
                 </p>
 
-                <table class="budget-table">
-                    <thead>
-                        <tr>
-                            <th>항목</th>
-                            <th>상세 내역</th>
-                            <th>예상 금액 (원화)</th>
-                            <th>실제 지출 금액 (원화)</th>
-                            <th>영수증 메모 / 비고</th>
-                            <th>차액 (예산 대비)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="budget-table-body">
+                <div id="budget-categories-container">
+                    <!-- Dynamic multi-receipt items rendered by JS -->
+                </div>
+
+                <div class="overall-summary-card">
+                    <div class="summary-title">📊 8인 전체 3박 4일 총 결산</div>
+                    <div class="summary-values" id="overall-summary-values">
                         <!-- Rendered by JS -->
-                    </tbody>
-                </table>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1018,8 +1133,20 @@
             }, 3500);
         }
 
-        // Budget & Receipt Items Data
-        const initialBudgetData = [
+        // Utility: Format Number with Commas
+        function formatCommas(num) {
+            if (num === null || num === undefined || isNaN(num) || num === '') return '';
+            return Number(num).toLocaleString('ko-KR');
+        }
+
+        function parseNum(val) {
+            if (!val) return 0;
+            const clean = String(val).replace(/,/g, '').trim();
+            return Number(clean) || 0;
+        }
+
+        // Budget Items Master Config
+        const budgetCategories = [
             { id: 'flight', item: '✈️ 항공권 (8인 왕복)', detail: '8인 항공권 (예약 완료)', expected: 2400000 },
             { id: 'hotel', item: '🏨 숙소 (3박 8인)', detail: '3박 8인 숙소 (예약 완료)', expected: 1800000 },
             { id: 'airport_transit', item: '🚌 한국 ➔ 공항 왕복 교통비', detail: '8인 공항리무진 / 주차장 2대+유류비', expected: 220000 },
@@ -1030,74 +1157,113 @@
             { id: 'shopping', item: '🛍️ 쇼핑 & 예비비', detail: '돈키호테/선물/비상금', expected: 360000 }
         ];
 
+        // Multi-receipt Data Structure
         let receiptStore = {
-            actuals: {},
-            memos: {},
+            receipts: {}, // { 'flight': [{ amount: 1200000, memo: '본인 결제' }, { amount: 1200000, memo: '처제 결제' }] }
             lastSaved: null
         };
 
-        function renderBudgetTable() {
-            const tbody = document.getElementById('budget-table-body');
-            let totalExpected = 0;
-            let totalActual = 0;
+        function renderBudgetCategories() {
+            const container = document.getElementById('budget-categories-container');
+            let overallExpected = 0;
+            let overallActual = 0;
 
-            const rowsHtml = initialBudgetData.map(row => {
-                totalExpected += row.expected;
-                const actualValRaw = receiptStore.actuals[row.id];
-                const actual = actualValRaw !== undefined && actualValRaw !== null ? actualValRaw : '';
-                const memo = receiptStore.memos[row.id] || '';
+            const blocksHtml = budgetCategories.map(cat => {
+                overallExpected += cat.expected;
 
-                const actualValNum = Number(actual) || 0;
-                if (actual !== '') totalActual += actualValNum;
-
-                const diff = actual !== '' ? actualValNum - row.expected : null;
-                let diffHtml = '-';
-                if (diff !== null) {
-                    if (diff <= 0) {
-                        diffHtml = `<span class="diff-text diff-minus">${Math.abs(diff).toLocaleString()}원 절감 ↓</span>`;
+                // Migration handling for legacy single-item format
+                if (!receiptStore.receipts[cat.id]) {
+                    if (receiptStore.actuals && receiptStore.actuals[cat.id] !== undefined) {
+                        receiptStore.receipts[cat.id] = [{
+                            amount: receiptStore.actuals[cat.id],
+                            memo: receiptStore.memos ? (receiptStore.memos[cat.id] || '') : ''
+                        }];
                     } else {
-                        diffHtml = `<span class="diff-text diff-plus">+${diff.toLocaleString()}원 초과 ↑</span>`;
+                        receiptStore.receipts[cat.id] = [{ amount: '', memo: '' }];
                     }
                 }
 
+                const subList = receiptStore.receipts[cat.id];
+                let catSum = 0;
+                subList.forEach(sub => {
+                    catSum += parseNum(sub.amount);
+                });
+
+                overallActual += catSum;
+
+                const diff = catSum > 0 ? catSum - cat.expected : null;
+                let diffHtml = '';
+                if (diff !== null) {
+                    if (diff <= 0) {
+                        diffHtml = `<span class="diff-text diff-minus">(${Math.abs(diff).toLocaleString()}원 절감 ↓)</span>`;
+                    } else {
+                        diffHtml = `<span class="diff-text diff-plus">(+${diff.toLocaleString()}원 초과 ↑)</span>`;
+                    }
+                }
+
+                const subRowsHtml = subList.map((sub, idx) => `
+                    <div class="sub-receipt-row">
+                        <span style="font-size:0.8rem; color:var(--text-muted); font-weight:700; width:55px;">결제 ${idx + 1}</span>
+                        
+                        <input type="text" class="formatted-amount-input" id="input-amt-${cat.id}-${idx}" 
+                               placeholder="0" value="${formatCommas(sub.amount)}" 
+                               oninput="onSubAmountInput('${cat.id}', ${idx}, this.value)"
+                               onblur="onSubAmountBlur('${cat.id}', ${idx}, this)">
+                        <span style="font-size:0.85rem; font-weight:700;">원</span>
+
+                        <div class="quick-btn-group">
+                            <button class="q-btn" onclick="addQuickAmount('${cat.id}', ${idx}, 10000)">+1만</button>
+                            <button class="q-btn" onclick="addQuickAmount('${cat.id}', ${idx}, 100000)">+10만</button>
+                            <button class="q-btn" onclick="addQuickAmount('${cat.id}', ${idx}, 500000)">+50만</button>
+                            <button class="q-btn" onclick="addQuickAmount('${cat.id}', ${idx}, 1000000)">+100만</button>
+                        </div>
+
+                        <input type="text" class="memo-input" placeholder="결제자 / 구매장소 / 비고 메모" 
+                               value="${sub.memo || ''}" 
+                               oninput="onSubMemoInput('${cat.id}', ${idx}, this.value)">
+
+                        ${subList.length > 1 ? `<button class="btn-del-sub" onclick="removeSubReceipt('${cat.id}', ${idx})">🗑️ 삭제</button>` : ''}
+                    </div>
+                `).join('');
+
                 return `
-                    <tr>
-                        <td><strong>${row.item}</strong></td>
-                        <td style="color:var(--text-muted); font-size:0.88rem;">${row.detail}</td>
-                        <td>₩${row.expected.toLocaleString()}</td>
-                        <td>
-                            <input type="number" class="actual-input" id="input-actual-${row.id}" placeholder="0" value="${actual}" oninput="onBudgetInputChange('${row.id}')"> 원
-                        </td>
-                        <td>
-                            <input type="text" class="memo-input" id="input-memo-${row.id}" placeholder="예: 세븐일레븐 현금/결제장소" value="${memo}" oninput="onBudgetInputChange('${row.id}')">
-                        </td>
-                        <td>${diffHtml}</td>
-                    </tr>
+                    <div class="category-budget-block">
+                        <div class="category-budget-header">
+                            <div class="category-name-box">
+                                <h3>${cat.item} <span>(예상: ₩${cat.expected.toLocaleString()})</span></h3>
+                            </div>
+                            <div class="category-sum-box">
+                                <span class="sum-badge">실제 소계: ₩${catSum.toLocaleString()} ${diffHtml}</span>
+                                <button class="btn-add-receipt" onclick="addSubReceipt('${cat.id}')">➕ 결제 추가</button>
+                            </div>
+                        </div>
+                        <div class="sub-receipts-list">
+                            ${subRowsHtml}
+                        </div>
+                    </div>
                 `;
             }).join('');
 
-            const totalDiff = totalActual > 0 ? totalActual - totalExpected : null;
-            let totalDiffHtml = '-';
-            if (totalDiff !== null) {
-                if (totalDiff <= 0) {
-                    totalDiffHtml = `<span class="diff-text diff-minus" style="font-size:1rem;">총 ${Math.abs(totalDiff).toLocaleString()}원 절감! 🎉</span>`;
+            container.innerHTML = blocksHtml;
+
+            // Render Overall Summary
+            const overallDiff = overallActual > 0 ? overallActual - overallExpected : null;
+            let overallDiffText = '';
+            if (overallDiff !== null) {
+                if (overallDiff <= 0) {
+                    overallDiffText = `<span class="diff-text diff-minus" style="font-size:1.1rem;">총 ${Math.abs(overallDiff).toLocaleString()}원 절감! 🎉</span>`;
                 } else {
-                    totalDiffHtml = `<span class="diff-text diff-plus" style="font-size:1rem;">총 +${totalDiff.toLocaleString()}원 초과</span>`;
+                    overallDiffText = `<span class="diff-text diff-plus" style="font-size:1.1rem;">총 +${overallDiff.toLocaleString()}원 초과</span>`;
                 }
             }
 
-            const totalRow = `
-                <tr class="total-row">
-                    <td colspan="2">합계 (Total)</td>
-                    <td>₩${totalExpected.toLocaleString()}</td>
-                    <td>₩${totalActual > 0 ? totalActual.toLocaleString() : 0}</td>
-                    <td>-</td>
-                    <td>${totalDiffHtml}</td>
-                </tr>
+            document.getElementById('overall-summary-values').innerHTML = `
+                <div>예상: ₩${overallExpected.toLocaleString()}원</div>
+                <div style="color:var(--accent-emerald);">실제 지출: ₩${overallActual.toLocaleString()}원</div>
+                <div>${overallDiffText}</div>
             `;
 
-            tbody.innerHTML = rowsHtml + totalRow;
-
+            // Last Saved Time Label
             const lastSavedEl = document.getElementById('last-saved-time');
             if (receiptStore.lastSaved) {
                 lastSavedEl.innerText = `마지막 저장: ${receiptStore.lastSaved}`;
@@ -1106,28 +1272,69 @@
             }
         }
 
-        function onBudgetInputChange(id) {
-            const actualVal = document.getElementById(`input-actual-${id}`).value;
-            const memoVal = document.getElementById(`input-memo-${id}`).value;
-
-            if (actualVal === '') delete receiptStore.actuals[id];
-            else receiptStore.actuals[id] = Number(actualVal);
-
-            receiptStore.memos[id] = memoVal;
+        function onSubAmountInput(catId, idx, rawVal) {
+            const num = parseNum(rawVal);
+            receiptStore.receipts[catId][idx].amount = num === 0 ? '' : num;
             updateTotalsOnly();
         }
 
+        function onSubAmountBlur(catId, idx, inputEl) {
+            const num = parseNum(inputEl.value);
+            inputEl.value = formatCommas(num);
+        }
+
+        function onSubMemoInput(catId, idx, memoVal) {
+            receiptStore.receipts[catId][idx].memo = memoVal;
+        }
+
+        function addQuickAmount(catId, idx, addVal) {
+            const currentNum = parseNum(receiptStore.receipts[catId][idx].amount);
+            const newNum = currentNum + addVal;
+            receiptStore.receipts[catId][idx].amount = newNum;
+            
+            renderBudgetCategories();
+        }
+
+        function addSubReceipt(catId) {
+            if (!receiptStore.receipts[catId]) receiptStore.receipts[catId] = [];
+            receiptStore.receipts[catId].push({ amount: '', memo: '' });
+            renderBudgetCategories();
+        }
+
+        function removeSubReceipt(catId, idx) {
+            if (receiptStore.receipts[catId] && receiptStore.receipts[catId].length > 1) {
+                receiptStore.receipts[catId].splice(idx, 1);
+                renderBudgetCategories();
+            }
+        }
+
         function updateTotalsOnly() {
-            let totalExpected = 0;
-            let totalActual = 0;
-            initialBudgetData.forEach(row => {
-                totalExpected += row.expected;
-                const val = receiptStore.actuals[row.id];
-                if (val !== undefined && val !== null && val !== '') {
-                    totalActual += Number(val);
-                }
+            let overallExpected = 0;
+            let overallActual = 0;
+
+            budgetCategories.forEach(cat => {
+                overallExpected += cat.expected;
+                const subList = receiptStore.receipts[cat.id] || [];
+                subList.forEach(sub => {
+                    overallActual += parseNum(sub.amount);
+                });
             });
-            renderBudgetTable();
+
+            const overallDiff = overallActual > 0 ? overallActual - overallExpected : null;
+            let overallDiffText = '';
+            if (overallDiff !== null) {
+                if (overallDiff <= 0) {
+                    overallDiffText = `<span class="diff-text diff-minus" style="font-size:1.1rem;">총 ${Math.abs(overallDiff).toLocaleString()}원 절감! 🎉</span>`;
+                } else {
+                    overallDiffText = `<span class="diff-text diff-plus" style="font-size:1.1rem;">총 +${overallDiff.toLocaleString()}원 초과</span>`;
+                }
+            }
+
+            document.getElementById('overall-summary-values').innerHTML = `
+                <div>예상: ₩${overallExpected.toLocaleString()}원</div>
+                <div style="color:var(--accent-emerald);">실제 지출: ₩${overallActual.toLocaleString()}원</div>
+                <div>${overallDiffText}</div>
+            `;
         }
 
         function saveReceiptData(showToastMsg = true) {
@@ -1139,8 +1346,8 @@
                 String(now.getMinutes()).padStart(2, '0') + ':' +
                 String(now.getSeconds()).padStart(2, '0');
 
-            localStorage.setItem('okinawa_receipt_store_v2', JSON.stringify(receiptStore));
-            renderBudgetTable();
+            localStorage.setItem('okinawa_receipt_store_v3', JSON.stringify(receiptStore));
+            renderBudgetCategories();
             if (showToastMsg) showToast('💾 로컬 저장소에 성공적으로 저장되었습니다!');
         }
 
@@ -1164,28 +1371,29 @@
                     throw new Error('No remote json found');
                 })
                 .then(data => {
-                    if (data && (data.actuals || data.memos)) {
+                    if (data && (data.receipts || data.actuals)) {
                         receiptStore = data;
-                        localStorage.setItem('okinawa_receipt_store_v2', JSON.stringify(receiptStore));
-                        renderBudgetTable();
+                        localStorage.setItem('okinawa_receipt_store_v3', JSON.stringify(receiptStore));
+                        renderBudgetCategories();
                         if (showNotification) showToast('🌐 GitHub 최신 data/receipts.json 내역을 불러왔습니다!');
                     }
                 })
                 .catch(() => {
-                    const saved = localStorage.getItem('okinawa_receipt_store_v2');
+                    const saved = localStorage.getItem('okinawa_receipt_store_v3') || localStorage.getItem('okinawa_receipt_store_v2');
                     if (saved) {
                         receiptStore = JSON.parse(saved);
-                        renderBudgetTable();
-                        if (showNotification) showToast('📂 로컬 저장소 내역을 로딩했습니다.');
+                        renderBudgetCategories();
+                        if (showNotification) showToast('📂 저장소 내역을 성공적으로 로딩했습니다.');
                     }
                 });
         }
 
         function resetReceiptData() {
             if (confirm('정말로 작성한 영수증/지출 내역을 초기화하시겠습니까?')) {
-                receiptStore = { actuals: {}, memos: {}, lastSaved: null };
+                receiptStore = { receipts: {}, lastSaved: null };
+                localStorage.removeItem('okinawa_receipt_store_v3');
                 localStorage.removeItem('okinawa_receipt_store_v2');
-                renderBudgetTable();
+                renderBudgetCategories();
                 showToast('🔄 영수증 내역이 초기화되었습니다.');
             }
         }
