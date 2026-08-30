@@ -48,6 +48,104 @@
             padding-bottom: 80px;
         }
 
+        /* Site Protection Full Overlay */
+        .site-lock-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: radial-gradient(circle at 50% 50%, #0a192f 0%, #040d1a 100%);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(20px);
+        }
+
+        .site-lock-box {
+            width: 100%;
+            max-width: 440px;
+            background: rgba(16, 36, 64, 0.92);
+            border: 1px solid rgba(0, 210, 255, 0.3);
+            border-radius: var(--radius-lg);
+            padding: 35px 28px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 210, 255, 0.2);
+        }
+
+        .lock-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .lock-title {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+
+        .lock-desc {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 25px;
+        }
+
+        .lock-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .lock-input {
+            width: 100%;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            color: var(--accent-teal);
+            font-size: 1.2rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: 4px;
+            outline: none;
+        }
+
+        .lock-input:focus {
+            border-color: var(--accent-ocean);
+            box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+        }
+
+        .lock-submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--accent-ocean), var(--accent-emerald));
+            color: #021a12;
+            font-weight: 900;
+            font-size: 1rem;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .lock-submit-btn:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+        }
+
+        .lock-err-msg {
+            color: var(--accent-coral);
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .main-content-wrapper {
+            display: none; /* Hidden until password authentication */
+        }
+
         .glass-panel {
             background: var(--bg-card);
             backdrop-filter: blur(16px);
@@ -1010,451 +1108,505 @@
 </head>
 <body>
 
-    <div class="container">
-        <!-- Header -->
-        <header>
-            <span class="badge-tag">✈️ 9월 오키나와 8인 대가족 여행 가이드</span>
-            <h1>부모님 & 아이와 함께하는 오키나와 3박 4일</h1>
-            <p class="subtitle">2026년 9월 16일(수) ~ 9월 19일(토) | 긴초 숙소 중심 완벽 통합 코스</p>
+    <!-- Site Password Lock Overlay -->
+    <div class="site-lock-overlay" id="site-lock-screen">
+        <div class="site-lock-box">
+            <div class="lock-icon">🔒</div>
+            <div class="lock-title">가족 비밀번호 인증</div>
+            <div class="lock-desc">
+                이 웹페이지는 오키나와 여행 가족 전용입니다.<br>
+                비밀번호를 입력해야만 일정을 보실 수 있습니다.
+            </div>
             
-            <!-- D-Day Counter -->
-            <div class="glass-panel dday-box">
-                <div class="info-pill">👨‍👩‍👧‍👦 총 8명 (성인 6명 + 초등 2명)</div>
-                <div class="info-pill">🏨 숙소 & 항공권 예약 완료</div>
-                <div class="info-pill">🚗 렌터카 2대 운용 예정</div>
-                <div style="flex-basis: 100%; height: 0;"></div>
-                
-                <div class="timer-unit">
-                    <div class="timer-num" id="d-day-count">D-0</div>
-                    <div class="timer-label">출발까지 남은 D-Day</div>
-                </div>
+            <div class="lock-input-group">
+                <input type="password" id="site-pass-input" class="lock-input" placeholder="비밀번호 입력" onkeypress="handleLockKeyPress(event)">
+                <button class="lock-submit-btn" onclick="verifySitePassword()">🔓 내용 확인하기</button>
             </div>
-        </header>
+            <div class="lock-err-msg" id="lock-err-text">❌ 비밀번호가 올바르지 않습니다!</div>
+        </div>
+    </div>
 
-        <!-- 1. 3박 4일 상세 일정표 대시보드 (신규 핵심 코스) -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">📅 8인 대가족 3박 4일 상세 추천 일자별 코스</h2>
-            
-            <div class="itinerary-day-tabs">
-                <button class="day-tab-btn active" onclick="switchDayTab('day1', this)">
-                    <h4>1일차 (9/16 수)</h4>
-                    <p>입국 & 긴초 숙소 첫 물놀이</p>
-                </button>
-                <button class="day-tab-btn" onclick="switchDayTab('day2', this)">
-                    <h4>2일차 (9/17 목)</h4>
-                    <p>츄라우미 & 숙소 스노클링</p>
-                </button>
-                <button class="day-tab-btn" onclick="switchDayTab('day3', this)">
-                    <h4>3일차 (9/18 금)</h4>
-                    <p>대자연 vs 쇼핑 & 불빛축제</p>
-                </button>
-                <button class="day-tab-btn" onclick="switchDayTab('day4', this)">
-                    <h4>4일차 (9/19 토)</h4>
-                    <p>우미카지 테라스 & 귀국</p>
-                </button>
-            </div>
-
-            <!-- 1일차 상세 카드 -->
-            <div class="glass-panel itinerary-card" id="day1-card">
-                <span class="day-header-badge">🛬 1일차: 입국 ➔ 나하 점검 ➔ 긴초 숙소 도착 후 첫 물놀이</span>
+    <!-- Main Content Wrapper (Protected) -->
+    <div class="main-content-wrapper" id="main-app-content">
+        <div class="container">
+            <!-- Header -->
+            <header>
+                <span class="badge-tag">✈️ 9월 오키나와 8인 대가족 여행 가이드</span>
+                <h1>부모님 & 아이와 함께하는 오키나와 3박 4일</h1>
+                <p class="subtitle">2026년 9월 16일(수) ~ 9월 19일(토) | 긴초 숙소 중심 완벽 통합 코스</p>
                 
-                <div class="time-step-list">
-                    <div class="time-step-item">
-                        <div class="step-time">13:30 ~ 15:00</div>
-                        <div class="step-title">나하 공항 도착 & 렌터카 2대 수령</div>
-                        <div class="food-box">
-                            🍱 <strong>추천 점심 식사:</strong><br>
-                            - <strong>잭스 스테이크 하우스 (Jack's Steak House):</strong> 오키나와 가성비 1위 스테이크 맛집<br>
-                            - <strong>마키시 공영시장 (Makishi Public Market):</strong> 1층 해산물 구경 ➔ 2층 식당가에서 회, 생선구이, 볶음요리 현지 주문
-                        </div>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">15:30 ~ 16:30</div>
-                        <div class="step-title">나하 시내 가벼운 산책</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">
-                            - <strong>후쿠슈엔 (Fukushuen):</strong> 평지 중국식 정원에서 가벼운 산책 OR <strong>슈리성 공원</strong>
-                        </p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">16:30 ~ 17:30</div>
-                        <div class="step-title">고속도로 이동 ➔ 긴초(Kincho) 숙소 도착</div>
-                        <p style="font-size:0.88rem; color:var(--text-muted);">나하에서 긴초 숙소까지 차로 약 50분 소요 (고속도로 이용)</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">17:30 ~ 19:00</div>
-                        <div class="step-title">🏖️ [숙소 타임] 체크인 & 수영장/해변 1차 물놀이</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">숙소 체크인 후 전용 수영장 및 앞바다 해변에서 가벼운 1차 수영 타임</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">19:00 ~</div>
-                        <div class="step-title">긴초 근처 여유로운 저녁 식사</div>
-                        <div class="food-box">
-                            🍱 <strong>긴초 저녁 식사 후보 (매장 또는 테이크아웃):</strong><br>
-                            - <strong>King Tacos (킹타코스 본점):</strong> 오키나와 대표 타코라이스 맛집<br>
-                            - <strong>Il Mattarello Pasta e Pizza:</strong> 정통 수제 파스타 & 화덕 피자<br>
-                            - <strong>ALOHA burger / 66 Diner:</strong> 육즙 가득 수제 버거 & 아메리칸 다이너
-                        </div>
+                <!-- D-Day Counter -->
+                <div class="glass-panel dday-box">
+                    <div class="info-pill">👨‍👩‍👧‍👦 총 8명 (성인 6명 + 초등 2명)</div>
+                    <div class="info-pill">🏨 숙소 & 항공권 예약 완료</div>
+                    <div class="info-pill">🚗 렌터카 2대 운용 예정</div>
+                    <div style="flex-basis: 100%; height: 0;"></div>
+                    
+                    <div class="timer-unit">
+                        <div class="timer-num" id="d-day-count">D-0</div>
+                        <div class="timer-label">출발까지 남은 D-Day</div>
                     </div>
                 </div>
-            </div>
+            </header>
 
-            <!-- 2일차 상세 카드 -->
-            <div class="glass-panel itinerary-card" id="day2-card" style="display:none;">
-                <span class="day-header-badge">🐋 2일차: 추라우미 수족관 & 오후 집중 해변·수영장 타임</span>
+            <!-- 1. 3박 4일 상세 일정표 대시보드 (신규 핵심 코스) -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">📅 8인 대가족 3박 4일 상세 추천 일자별 코스</h2>
                 
-                <div class="time-step-list">
-                    <div class="time-step-item">
-                        <div class="step-time">아침 식사 팁</div>
-                        <div class="step-title">숙소 아침 장보기 식사</div>
-                        <div class="tip-pill-box">
-                            💡 <strong>추천 아침 장보기 목록:</strong><br>
-                            - <strong>긴초 인근 San-A / 맥스밸류 마트:</strong> 즉석 미소된장국, 햇반, 조미김, 계란말이, 오키나와 두부(지마미두부/유시두부), 과일, 우유, 요거트, 오키나와 특산 소시지<br>
-                            - <strong>편의점 (로손/세븐일레븐/패밀리마트):</strong> 타마고 샌드위치, 오니기리, 푸딩, 즉석 빵
-                        </div>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">오전 (09:30 ~ 12:30)</div>
-                        <div class="step-title">오키나와 추라우미 수족관 관람</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">
-                            쾌적한 에어컨 실내에서 세계 최대급 대형 고래상어 및 만타 가오리 대형 수조 관람 (초등학생 & 부모님 최적)
-                        </p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">12:30 ~ 14:00</div>
-                        <div class="step-title">모토부 / 나고 근처 점심 식사</div>
-                        <div class="food-box">
-                            🍱 <strong>모토부 추천 맛집:</strong><br>
-                            - <strong>키시모토 식당 (Kishimoto):</strong> 100년 전통 수제 소바 노포<br>
-                            - <strong>키시모토 야에다케점:</strong> 본점 대비 주차 및 내부가 매우 쾌적<br>
-                            - <strong>레스토랑 플리퍼 (Flipper):</strong> 비치 전망 정통 비프 스테이크<br>
-                            - <strong>야키니쿠 모토부 목장 모토부점:</strong> 최고급 와규 가성비 런치 세트
-                        </div>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">14:30 ~ 18:00</div>
-                        <div class="step-title">🤿 [숙소 집중 물놀이 타임] 해변 스노클링 & 수영장 & 모래놀이</div>
-                        <div class="tip-pill-box">
-                            🏊‍♂️ <strong>물놀이 동선:</strong> 숙소 앞바다 수영 ➔ 숙소 수영장으로 바로 이동해 깨끗이 씻고 놀기 (아이들과 부모님 모두 만족)
-                        </div>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">18:30 ~</div>
-                        <div class="step-title">긴초 현지 맛집 저녁 식사</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">씻고 나와 긴초 근처 맛집에서 맛있는 저녁 식사</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3일차 상세 카드 (선택 안 토글 기능 포함) -->
-            <div class="glass-panel itinerary-card" id="day3-card" style="display:none;">
-                <span class="day-header-badge">🌿 3일차: 대자연 (또는 쇼핑) & 야간 불빛 축제</span>
-                
-                <div class="option-toggle-bar">
-                    <button class="opt-btn active-a" id="btn-opt-a" onclick="switchDay3Opt('a')">🌿 [A안] 대자연 (다이세키린잔 & 항구 생선요리)</button>
-                    <button class="opt-btn" id="btn-opt-b" onclick="switchDay3Opt('b')">🛍️ [B안] 쇼핑/실내 (이온몰 라이카무 포켓몬센터)</button>
+                <div class="itinerary-day-tabs">
+                    <button class="day-tab-btn active" onclick="switchDayTab('day1', this)">
+                        <h4>1일차 (9/16 수)</h4>
+                        <p>입국 & 긴초 숙소 첫 물놀이</p>
+                    </button>
+                    <button class="day-tab-btn" onclick="switchDayTab('day2', this)">
+                        <h4>2일차 (9/17 목)</h4>
+                        <p>츄라우미 & 숙소 스노클링</p>
+                    </button>
+                    <button class="day-tab-btn" onclick="switchDayTab('day3', this)">
+                        <h4>3일차 (9/18 금)</h4>
+                        <p>대자연 vs 쇼핑 & 불빛축제</p>
+                    </button>
+                    <button class="day-tab-btn" onclick="switchDayTab('day4', this)">
+                        <h4>4일차 (9/19 토)</h4>
+                        <p>우미카지 테라스 & 귀국</p>
+                    </button>
                 </div>
 
-                <div class="time-step-list">
-                    <!-- A안 콘텐츠 -->
-                    <div id="day3-content-a">
+                <!-- 1일차 상세 카드 -->
+                <div class="glass-panel itinerary-card" id="day1-card">
+                    <span class="day-header-badge">🛬 1일차: 입국 ➔ 나하 점검 ➔ 긴초 숙소 도착 후 첫 물놀이</span>
+                    
+                    <div class="time-step-list">
                         <div class="time-step-item">
-                            <div class="step-time">오전 (09:30 ~ 13:00)</div>
-                            <div class="step-title">ASMUI Spiritual Hikes (다이세키린잔) & 점심</div>
-                            <p style="font-size:0.9rem; color:var(--text-muted);">
-                                20분 평탄 데크길 배리어 프리 코스로 부모님과 아이 모두 편안한 기암괴석 및 열대 카르스트 산책
-                            </p>
+                            <div class="step-time">13:30 ~ 15:00</div>
+                            <div class="step-title">나하 공항 도착 & 렌터카 2대 수령</div>
                             <div class="food-box">
-                                🍱 <strong>A안 점심 식사:</strong><br>
-                                - <strong>쿠니가미 미나토 쇼쿠도 (Kunigami Port Shokudo):</strong> 다이세키린잔 20분 거리, 항구 바로 앞 생선요리 맛집 (14시 라스트오더)<br>
-                                - <strong>미치노에키 유이유이 구니가미:</strong> 넓은 휴게소 푸드코트
+                                🍱 <strong>추천 점심 식사:</strong><br>
+                                - <strong>잭스 스테이크 하우스 (Jack's Steak House):</strong> 오키나와 가성비 1위 스테이크 맛집<br>
+                                - <strong>마키시 공영시장 (Makishi Public Market):</strong> 1층 해산물 구경 ➔ 2층 식당가에서 회, 생선구이, 볶음요리 현지 주문
+                            </div>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">15:30 ~ 16:30</div>
+                            <div class="step-title">나하 시내 가벼운 산책</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">
+                                - <strong>후쿠슈엔 (Fukushuen):</strong> 평지 중국식 정원에서 가벼운 산책 OR <strong>슈리성 공원</strong>
+                            </p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">16:30 ~ 17:30</div>
+                            <div class="step-title">고속도로 이동 ➔ 긴초(Kincho) 숙소 도착</div>
+                            <p style="font-size:0.88rem; color:var(--text-muted);">나하에서 긴초 숙소까지 차로 약 50분 소요 (고속도로 이용)</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">17:30 ~ 19:00</div>
+                            <div class="step-title">🏖️ [숙소 타임] 체크인 & 수영장/해변 1차 물놀이</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">숙소 체크인 후 전용 수영장 및 앞바다 해변에서 가벼운 1차 수영 타임</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">19:00 ~</div>
+                            <div class="step-title">긴초 근처 여유로운 저녁 식사</div>
+                            <div class="food-box">
+                                🍱 <strong>긴초 저녁 식사 후보 (매장 또는 테이크아웃):</strong><br>
+                                - <strong>King Tacos (킹타코스 본점):</strong> 오키나와 대표 타코라이스 맛집<br>
+                                - <strong>Il Mattarello Pasta e Pizza:</strong> 정통 수제 파스타 & 화덕 피자<br>
+                                - <strong>ALOHA burger / 66 Diner:</strong> 육즙 가득 수제 버거 & 아메리칸 다이너
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2일차 상세 카드 -->
+                <div class="glass-panel itinerary-card" id="day2-card" style="display:none;">
+                    <span class="day-header-badge">🐋 2일차: 추라우미 수족관 & 오후 집중 해변·수영장 타임</span>
+                    
+                    <div class="time-step-list">
+                        <div class="time-step-item">
+                            <div class="step-time">아침 식사 팁</div>
+                            <div class="step-title">숙소 아침 장보기 식사</div>
+                            <div class="tip-pill-box">
+                                💡 <strong>추천 아침 장보기 목록:</strong><br>
+                                - <strong>긴초 인근 San-A / 맥스밸류 마트:</strong> 즉석 미소된장국, 햇반, 조미김, 계란말이, 오키나와 두부(지마미두부/유시두부), 과일, 우유, 요거트, 오키나와 특산 소시지<br>
+                                - <strong>편의점 (로손/세븐일레븐/패밀리마트):</strong> 타마고 샌드위치, 오니기리, 푸딩, 즉석 빵
+                            </div>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">오전 (09:30 ~ 12:30)</div>
+                            <div class="step-title">오키나와 추라우미 수족관 관람</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">
+                                쾌적한 에어컨 실내에서 세계 최대급 대형 고래상어 및 만타 가오리 대형 수조 관람 (초등학생 & 부모님 최적)
+                            </p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">12:30 ~ 14:00</div>
+                            <div class="step-title">모토부 / 나고 근처 점심 식사</div>
+                            <div class="food-box">
+                                🍱 <strong>모토부 추천 맛집:</strong><br>
+                                - <strong>키시모토 식당 (Kishimoto):</strong> 100년 전통 수제 소바 노포<br>
+                                - <strong>키시모토 야에다케점:</strong> 본점 대비 주차 및 내부가 매우 쾌적<br>
+                                - <strong>레스토랑 플리퍼 (Flipper):</strong> 비치 전망 정통 비프 스테이크<br>
+                                - <strong>야키니쿠 모토부 목장 모토부점:</strong> 최고급 와규 가성비 런치 세트
+                            </div>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">14:30 ~ 18:00</div>
+                            <div class="step-title">🤿 [숙소 집중 물놀이 타임] 해변 스노클링 & 수영장 & 모래놀이</div>
+                            <div class="tip-pill-box">
+                                🏊‍♂️ <strong>물놀이 동선:</strong> 숙소 앞바다 수영 ➔ 숙소 수영장으로 바로 이동해 깨끗이 씻고 놀기 (아이들과 부모님 모두 만족)
+                            </div>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">18:30 ~</div>
+                            <div class="step-title">긴초 현지 맛집 저녁 식사</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">씻고 나와 긴초 근처 맛집에서 맛있는 저녁 식사</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3일차 상세 카드 (선택 안 토글 기능 포함) -->
+                <div class="glass-panel itinerary-card" id="day3-card" style="display:none;">
+                    <span class="day-header-badge">🌿 3일차: 대자연 (또는 쇼핑) & 야간 불빛 축제</span>
+                    
+                    <div class="option-toggle-bar">
+                        <button class="opt-btn active-a" id="btn-opt-a" onclick="switchDay3Opt('a')">🌿 [A안] 대자연 (다이세키린잔 & 항구 생선요리)</button>
+                        <button class="opt-btn" id="btn-opt-b" onclick="switchDay3Opt('b')">🛍️ [B안] 쇼핑/실내 (이온몰 라이카무 포켓몬센터)</button>
+                    </div>
+
+                    <div class="time-step-list">
+                        <!-- A안 콘텐츠 -->
+                        <div id="day3-content-a">
+                            <div class="time-step-item">
+                                <div class="step-time">오전 (09:30 ~ 13:00)</div>
+                                <div class="step-title">ASMUI Spiritual Hikes (다이세키린잔) & 점심</div>
+                                <p style="font-size:0.9rem; color:var(--text-muted);">
+                                    20분 평탄 데크길 배리어 프리 코스로 부모님과 아이 모두 편안한 기암괴석 및 열대 카르스트 산책
+                                </p>
+                                <div class="food-box">
+                                    🍱 <strong>A안 점심 식사:</strong><br>
+                                    - <strong>쿠니가미 미나토 쇼쿠도 (Kunigami Port Shokudo):</strong> 다이세키린잔 20분 거리, 항구 바로 앞 생선요리 맛집 (14시 라스트오더)<br>
+                                    - <strong>미치노에키 유이유이 구니가미:</strong> 넓은 휴게소 푸드코트
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- B안 콘텐츠 -->
+                        <div id="day3-content-b" style="display:none;">
+                            <div class="time-step-item">
+                                <div class="step-time">오전 (09:30 ~ 13:00)</div>
+                                <div class="step-title">이온몰 오키나와 라이카무 & 점심</div>
+                                <p style="font-size:0.9rem; color:var(--text-muted);">
+                                    대형 실내 쇼핑몰에서 쾌적하게 포켓몬센터 구경, 대형 수족관 로비 감상 및 대형 푸드코트 점심 식사
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- 3일차 오후 공통 일정 -->
+                        <div class="time-step-item">
+                            <div class="step-time">14:00 ~ 17:30</div>
+                            <div class="step-title">잔파곶 등대 또는 자키미 성터 산책</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">숙소 근처 멋진 등대 해안절벽 산책 및 인생샷 촬영</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">18:00 ~ 20:00</div>
+                            <div class="step-title">🦙 동남식물원 추라 야시 파크 (카피바라 & 야간 불빛 축제)</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">아이들이 좋아하는 카피바라 먹이주기 체험 및 화려한 야간 불빛 조명 축제 관람</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">추가 꿀팁 스팟</div>
+                            <div class="step-title">비세후쿠기 가로수길 & 만좌모 일몰</div>
+                            <div class="tip-pill-box">
+                                🚲 <strong>비세후쿠기 자전거 산책:</strong> 입구 화장실 맞은편 안내소 근처 무료 주차 (자전거 대여 시 여권 필요, 해안길까지 라이딩 가능)<br>
+                                🍹 <strong>아세로라 농장:</strong> 상큼한 Acerola Fresh 신선 음료 디저트<br>
+                                🌅 <strong>만좌모:</strong> 코끼리 바위 해질녘 일몰 감상 (선택: 부세나 해중공원)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4일차 상세 카드 -->
+                <div class="glass-panel itinerary-card" id="day4-card" style="display:none;">
+                    <span class="day-header-badge">🛫 4일차: 모닝 바다 산책/수영 ➔ 우미카지 테라스 ➔ 귀국</span>
+                    
+                    <div class="time-step-list">
+                        <div class="time-step-item">
+                            <div class="step-time">08:30 ~ 09:30</div>
+                            <div class="step-title">[체크아웃 전] 숙소 앞바다 모닝 산책 및 가벼운 수영</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">마지막 날 아침 긴초 숙소 앞 아침 바다 산책 및 상쾌한 모닝 수영</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">10:00 ~ 11:00</div>
+                            <div class="step-title">숙소 체크아웃 후 남부 공항 방면 이동</div>
+                            <p style="font-size:0.88rem; color:var(--text-muted);">짐 정리 후 고속도로로 남부 공항 방면 이동 (약 50분 소요)</p>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">11:15 ~ 12:30</div>
+                            <div class="step-title">🥞 세나가섬 우미카지테라스 (Umikaji Terrace)</div>
+                            <div class="food-box">
+                                🍱 <strong>점심 & 디저트:</strong><br>
+                                하얀 그리스풍 언덕 건물에서 에메랄드빛 바다와 비행기 이착륙을 보며 명물 푹신한 수플레 팬케이크 & 디저트 점심 식사
+                            </div>
+                        </div>
+
+                        <div class="time-step-item">
+                            <div class="step-time">12:30 ~ 13:30</div>
+                            <div class="step-title">렌터카 2대 반납 ➔ 셔틀 이동 ➔ 공항 탑승 수속 후 귀국</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">렌터카 2대 반납 및 셔틀버스 이동 후 나하 공항 탑승 수속을 마치고 안전하게 한국 귀국</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 9/16 ~ 9/19 한국 & 오키나와 기상 예보 -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">🌤️ 9/16 ~ 9/19 날씨 예상 및 기상청 정보 (KMA / JMA)</h2>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    한국 기상청(KMA) 및 일본 기상청(JMA) 기준 9월 중순 예상 예보 정보입니다. 9월 오키나와는 늦더위와 스콜성 비가 빈번하므로 실내 동선 준비가 권장됩니다.
+                </p>
+
+                <div class="weather-grid">
+                    <!-- 한국 출발지 날씨 -->
+                    <div class="weather-card">
+                        <h3>
+                            <span>🇰🇷 한국 (인천/서울 출발지)</span>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">한국 기상청 기준</span>
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted);">초가을 날씨로 아침저녁으로 선선하며 여행 출발하기 좋은 쾌청한 날씨입니다.</p>
+                        
+                        <div class="weather-day-list">
+                            <div class="weather-day-item">
+                                <div class="date">9/16(수)</div>
+                                <div class="icon">☀️</div>
+                                <div class="temp">20° / 27°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/17(목)</div>
+                                <div class="icon">⛅</div>
+                                <div class="temp">19° / 26°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/18(금)</div>
+                                <div class="icon">☀️</div>
+                                <div class="temp">19° / 27°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/19(토)</div>
+                                <div class="icon">☀️</div>
+                                <div class="temp">20° / 28°</div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- B안 콘텐츠 -->
-                    <div id="day3-content-b" style="display:none;">
-                        <div class="time-step-item">
-                            <div class="step-time">오전 (09:30 ~ 13:00)</div>
-                            <div class="step-title">이온몰 오키나와 라이카무 & 점심</div>
-                            <p style="font-size:0.9rem; color:var(--text-muted);">
-                                대형 실내 쇼핑몰에서 쾌적하게 포켓몬센터 구경, 대형 수족관 로비 감상 및 대형 푸드코트 점심 식사
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- 3일차 오후 공통 일정 -->
-                    <div class="time-step-item">
-                        <div class="step-time">14:00 ~ 17:30</div>
-                        <div class="step-title">잔파곶 등대 또는 자키미 성터 산책</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">숙소 근처 멋진 등대 해안절벽 산책 및 인생샷 촬영</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">18:00 ~ 20:00</div>
-                        <div class="step-title">🦙 동남식물원 추라 야시 파크 (카피바라 & 야간 불빛 축제)</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">아이들이 좋아하는 카피바라 먹이주기 체험 및 화려한 야간 불빛 조명 축제 관람</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">추가 꿀팁 스팟</div>
-                        <div class="step-title">비세후쿠기 가로수길 & 만좌모 일몰</div>
-                        <div class="tip-pill-box">
-                            🚲 <strong>비세후쿠기 자전거 산책:</strong> 입구 화장실 맞은편 안내소 근처 무료 주차 (자전거 대여 시 여권 필요, 해안길까지 라이딩 가능)<br>
-                            🍹 <strong>아세로라 농장:</strong> 상큼한 Acerola Fresh 신선 음료 디저트<br>
-                            🌅 <strong>만좌모:</strong> 코끼리 바위 해질녘 일몰 감상 (선택: 부세나 해중공원)
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4일차 상세 카드 -->
-            <div class="glass-panel itinerary-card" id="day4-card" style="display:none;">
-                <span class="day-header-badge">🛫 4일차: 모닝 바다 산책/수영 ➔ 우미카지 테라스 ➔ 귀국</span>
-                
-                <div class="time-step-list">
-                    <div class="time-step-item">
-                        <div class="step-time">08:30 ~ 09:30</div>
-                        <div class="step-title">[체크아웃 전] 숙소 앞바다 모닝 산책 및 가벼운 수영</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">마지막 날 아침 긴초 숙소 앞 아침 바다 산책 및 상쾌한 모닝 수영</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">10:00 ~ 11:00</div>
-                        <div class="step-title">숙소 체크아웃 후 남부 공항 방면 이동</div>
-                        <p style="font-size:0.88rem; color:var(--text-muted);">짐 정리 후 고속도로로 남부 공항 방면 이동 (약 50분 소요)</p>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">11:15 ~ 12:30</div>
-                        <div class="step-title">🥞 세나가섬 우미카지테라스 (Umikaji Terrace)</div>
-                        <div class="food-box">
-                            🍱 <strong>점심 & 디저트:</strong><br>
-                            하얀 그리스풍 언덕 건물에서 에메랄드빛 바다와 비행기 이착륙을 보며 명물 푹신한 수플레 팬케이크 & 디저트 점심 식사
-                        </div>
-                    </div>
-
-                    <div class="time-step-item">
-                        <div class="step-time">12:30 ~ 13:30</div>
-                        <div class="step-title">렌터카 2대 반납 ➔ 셔틀 이동 ➔ 공항 탑승 수속 후 귀국</div>
-                        <p style="font-size:0.9rem; color:var(--text-muted);">렌터카 2대 반납 및 셔틀버스 이동 후 나하 공항 탑승 수속을 마치고 안전하게 한국 귀국</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 2. 9/16 ~ 9/19 한국 & 오키나와 기상 예보 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">🌤️ 9/16 ~ 9/19 날씨 예상 및 기상청 정보 (KMA / JMA)</h2>
-            <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
-                한국 기상청(KMA) 및 일본 기상청(JMA) 기준 9월 중순 예상 예보 정보입니다. 9월 오키나와는 늦더위와 스콜성 비가 빈번하므로 실내 동선 준비가 권장됩니다.
-            </p>
-
-            <div class="weather-grid">
-                <!-- 한국 출발지 날씨 -->
-                <div class="weather-card">
-                    <h3>
-                        <span>🇰🇷 한국 (인천/서울 출발지)</span>
-                        <span style="font-size: 0.8rem; color: var(--text-muted);">한국 기상청 기준</span>
-                    </h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">초가을 날씨로 아침저녁으로 선선하며 여행 출발하기 좋은 쾌청한 날씨입니다.</p>
-                    
-                    <div class="weather-day-list">
-                        <div class="weather-day-item">
-                            <div class="date">9/16(수)</div>
-                            <div class="icon">☀️</div>
-                            <div class="temp">20° / 27°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/17(목)</div>
-                            <div class="icon">⛅</div>
-                            <div class="temp">19° / 26°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/18(금)</div>
-                            <div class="icon">☀️</div>
-                            <div class="temp">19° / 27°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/19(토)</div>
-                            <div class="icon">☀️</div>
-                            <div class="temp">20° / 28°</div>
+                    <!-- 오키나와 현지 날씨 -->
+                    <div class="weather-card">
+                        <h3>
+                            <span>🇯🇵 오키나와 (나하 / 차탄 현지)</span>
+                            <a href="https://www.jma.go.jp/jma/index.html" target="_blank" style="font-size: 0.8rem; color: var(--accent-ocean); text-decoration: none;">일본기상청(JMA) ↗</a>
+                        </h3>
+                        <p style="font-size: 0.88rem; color: var(--text-muted);">한낮 30도 이상의 여름 더위, 강한 자외선 및 갑작스러운 스콜 소나기가 잦습니다.</p>
+                        
+                        <div class="weather-day-list">
+                            <div class="weather-day-item">
+                                <div class="date">9/16(수)</div>
+                                <div class="icon">☀️</div>
+                                <div class="temp">26° / 31°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/17(목)</div>
+                                <div class="icon">🌦️</div>
+                                <div class="temp">25° / 30°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/18(금)</div>
+                                <div class="icon">☀️</div>
+                                <div class="temp">26° / 31°</div>
+                            </div>
+                            <div class="weather-day-item">
+                                <div class="date">9/19(토)</div>
+                                <div class="icon">⛅</div>
+                                <div class="temp">25° / 30°</div>
+                            </div>
                         </div>
                     </div>
                 </div>
+            </section>
 
-                <!-- 오키나와 현지 날씨 -->
-                <div class="weather-card">
-                    <h3>
-                        <span>🇯🇵 오키나와 (나하 / 차탄 현지)</span>
-                        <a href="https://www.jma.go.jp/jma/index.html" target="_blank" style="font-size: 0.8rem; color: var(--accent-ocean); text-decoration: none;">일본기상청(JMA) ↗</a>
-                    </h3>
-                    <p style="font-size: 0.88rem; color: var(--text-muted);">한낮 30도 이상의 여름 더위, 강한 자외선 및 갑작스러운 스콜 소나기가 잦습니다.</p>
-                    
-                    <div class="weather-day-list">
-                        <div class="weather-day-item">
-                            <div class="date">9/16(수)</div>
-                            <div class="icon">☀️</div>
-                            <div class="temp">26° / 31°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/17(목)</div>
-                            <div class="icon">🌦️</div>
-                            <div class="temp">25° / 30°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/18(금)</div>
-                            <div class="icon">☀️</div>
-                            <div class="temp">26° / 31°</div>
-                        </div>
-                        <div class="weather-day-item">
-                            <div class="date">9/19(토)</div>
-                            <div class="icon">⛅</div>
-                            <div class="temp">25° / 30°</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 3. 환율 & 은행별 엔화 살 때 우대율 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">💴 엔화 환율 & 주요 은행/카드사 환율 우대 비교</h2>
-            <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
-                현재 엔화 환율 <strong>100엔 ≒ 약 900원</strong> 기준 | 수수료 0% 혜택을 주는 대표 해외 특화 카드를 활용하세요.
-            </p>
-
-            <div class="exchange-grid">
-                <!-- 트래블로그 -->
-                <div class="bank-card featured">
-                    <span class="bank-badge badge-100">우대율 100%</span>
-                    <h3 style="color:#fff; margin-bottom: 6px;">💳 하나 트래블로그</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">하나은행 계좌 연동. 세븐일레븐(세븐뱅크) ATM 무료 출금 지원.</p>
-                    <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
-                </div>
-
-                <!-- 트래블월렛 -->
-                <div class="bank-card featured">
-                    <span class="bank-badge badge-100">우대율 100%</span>
-                    <h3 style="color:#fff; margin-bottom: 6px;">💳 트래블월렛</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">모든 시중은행 계좌 연동. 이온(AEON) 은행 ATM 무료 출금 지원.</p>
-                    <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
-                </div>
-
-                <!-- SOL트래블 / KB트래블러스 -->
-                <div class="bank-card featured">
-                    <span class="bank-badge badge-100">우대율 100%</span>
-                    <h3 style="color:#fff; margin-bottom: 6px;">💳 신한 SOL / KB 트래블러스</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">신한/국민은행 연동 해외 체크카드. 무료 환전 및 공항 라운지 혜택.</p>
-                    <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
-                </div>
-
-                <!-- 시중은행 창구 -->
-                <div class="bank-card">
-                    <span class="bank-badge badge-normal">우대율 80~90%</span>
-                    <h3 style="color:#fff; margin-bottom: 6px;">🏦 시중은행 지점/창구</h3>
-                    <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">국민/신한/우리/하나 현금 환전 (스프레드 약 1.5~1.75% 발생).</p>
-                    <div style="font-weight: 700; color: var(--accent-gold);">100엔당 약 908~915원</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- 4. 한국어 지도 & 숙소 주소 입력 동선 지도 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">🗺️ 오키나와 주요 명소 동선 지도 (Google Maps KR)</h2>
-            <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
-                지도의 모든 지역명/도로명이 <strong>한글(한국어)로 완전 번역 표기</strong>됩니다. 숙소 위치를 입력하여 주요 명소 동선을 확인하세요.
-            </p>
-
-            <!-- Custom Address Search Box -->
-            <div class="search-address-box">
-                <input type="text" id="custom-address-input" class="search-input" placeholder="예: 긴초 숙소 위치 또는 힐튼 오키나와 차탄 리조트" value="오키나와 긴초">
-                <button class="search-btn" onclick="searchCustomAddress()">📍 한국어 지도에 숙소 핀 꽂기</button>
-            </div>
-
-            <div class="location-tabs">
-                <button class="loc-btn active" onclick="presetLocation('kincho')">📍 [긴초] 1~3박 숙소 지역 (Kincho)</button>
-                <button class="loc-btn" onclick="presetLocation('motobu')">📍 [북부] 모토부 (츄라우미 주변)</button>
-                <button class="loc-btn" onclick="presetLocation('naha')">📍 [남부] 나하 (공항/국제거리)</button>
-            </div>
-
-            <div class="glass-panel" style="padding: 15px;">
-                <div id="map-container"></div>
-                <div class="distance-info-grid" id="distance-cards"></div>
-            </div>
-        </section>
-
-        <!-- 5. 8인 3박 4일 예산안 & 스마트 다중 영수증 / 쉬운 입력 시스템 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">💰 8인 3박 4일 가계부 (다중 분할 결제 & 쉬운 숫자 입력)</h2>
-            
-            <div class="glass-panel budget-box">
-                <!-- Action Control Bar -->
-                <div class="budget-control-bar">
-                    <div class="btn-group">
-                        <button class="action-btn btn-save-pass" onclick="saveWithPasswordPrompt()">🔒 비밀번호로 GitHub에 저장</button>
-                        <button class="action-btn btn-save" onclick="saveReceiptData(false)">💾 로컬에 빠른 저장</button>
-                        <button class="action-btn btn-load" onclick="fetchGitHubReceiptData(true)">🌐 GitHub 최신 파일 불러오기</button>
-                        <button class="action-btn btn-export" onclick="exportReceiptJSON()">📥 JSON 백업 파일 받기</button>
-                        <button class="action-btn btn-reset" onclick="resetReceiptData()">🔄 초기화</button>
-                    </div>
-                    <div class="last-saved-info" id="last-saved-time">마지막 저장: 없음</div>
-                </div>
-
-                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    * 💡 <strong>분할 결제 기능</strong>: 각 항목별로 <code>[+ 결제 추가]</code> 버튼을 누르면 분할 결제 내역(항공권 나눔 결제 등)을 여러 개 추가할 수 있습니다.<br>
-                    * 💡 <strong>쉬운 숫자 입력</strong>: 금액 입력 시 <strong>천 단위 쉼표(,)</strong>가 자동 표시되며, <code>[+1만]</code> <code>[+10만]</code> <code>[+50만]</code> <code>[+100만]</code> 버튼으로 쉽게 금액을 추가할 수 있습니다.
+            <!-- 3. 환율 & 은행별 엔화 살 때 우대율 -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">💴 엔화 환율 & 주요 은행/카드사 환율 우대 비교</h2>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    현재 엔화 환율 <strong>100엔 ≒ 약 900원</strong> 기준 | 수수료 0% 혜택을 주는 대표 해외 특화 카드를 활용하세요.
                 </p>
 
-                <div id="budget-categories-container">
-                    <!-- Dynamic multi-receipt items rendered by JS -->
-                </div>
+                <div class="exchange-grid">
+                    <!-- 트래블로그 -->
+                    <div class="bank-card featured">
+                        <span class="bank-badge badge-100">우대율 100%</span>
+                        <h3 style="color:#fff; margin-bottom: 6px;">💳 하나 트래블로그</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">하나은행 계좌 연동. 세븐일레븐(세븐뱅크) ATM 무료 출금 지원.</p>
+                        <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
+                    </div>
 
-                <div class="overall-summary-card">
-                    <div class="summary-title">📊 8인 전체 3박 4일 총 결산</div>
-                    <div class="summary-values" id="overall-summary-values">
-                        <!-- Rendered by JS -->
+                    <!-- 트래블월렛 -->
+                    <div class="bank-card featured">
+                        <span class="bank-badge badge-100">우대율 100%</span>
+                        <h3 style="color:#fff; margin-bottom: 6px;">💳 트래블월렛</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">모든 시중은행 계좌 연동. 이온(AEON) 은행 ATM 무료 출금 지원.</p>
+                        <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
+                    </div>
+
+                    <!-- SOL트래블 / KB트래블러스 -->
+                    <div class="bank-card featured">
+                        <span class="bank-badge badge-100">우대율 100%</span>
+                        <h3 style="color:#fff; margin-bottom: 6px;">💳 신한 SOL / KB 트래블러스</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">신한/국민은행 연동 해외 체크카드. 무료 환전 및 공항 라운지 혜택.</p>
+                        <div style="font-weight: 800; color: var(--accent-emerald);">수수료 0원 (100엔당 ~900원)</div>
+                    </div>
+
+                    <!-- 시중은행 창구 -->
+                    <div class="bank-card">
+                        <span class="bank-badge badge-normal">우대율 80~90%</span>
+                        <h3 style="color:#fff; margin-bottom: 6px;">🏦 시중은행 지점/창구</h3>
+                        <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 10px;">국민/신한/우리/하나 현금 환전 (스프레드 약 1.5~1.75% 발생).</p>
+                        <div style="font-weight: 700; color: var(--accent-gold);">100엔당 약 908~915원</div>
                     </div>
                 </div>
+            </section>
+
+            <!-- 4. 한국어 지도 & 숙소 주소 입력 동선 지도 -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">🗺️ 오키나와 주요 명소 동선 지도 (Google Maps KR)</h2>
+                <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
+                    지도의 모든 지역명/도로명이 <strong>한글(한국어)로 완전 번역 표기</strong>됩니다. 숙소 위치를 입력하여 주요 명소 동선을 확인하세요.
+                </p>
+
+                <!-- Custom Address Search Box -->
+                <div class="search-address-box">
+                    <input type="text" id="custom-address-input" class="search-input" placeholder="예: 긴초 숙소 위치 또는 힐튼 오키나와 차탄 리조트" value="오키나와 긴초">
+                    <button class="search-btn" onclick="searchCustomAddress()">📍 한국어 지도에 숙소 핀 꽂기</button>
+                </div>
+
+                <div class="location-tabs">
+                    <button class="loc-btn active" onclick="presetLocation('kincho')">📍 [긴초] 1~3박 숙소 지역 (Kincho)</button>
+                    <button class="loc-btn" onclick="presetLocation('motobu')">📍 [북부] 모토부 (츄라우미 주변)</button>
+                    <button class="loc-btn" onclick="presetLocation('naha')">📍 [남부] 나하 (공항/국제거리)</button>
+                </div>
+
+                <div class="glass-panel" style="padding: 15px;">
+                    <div id="map-container"></div>
+                    <div class="distance-info-grid" id="distance-cards"></div>
+                </div>
+            </section>
+
+            <!-- 5. 8인 3박 4일 예산안 & 스마트 다중 영수증 / 쉬운 입력 시스템 -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">💰 8인 3박 4일 가계부 (다중 분할 결제 & 쉬운 숫자 입력)</h2>
+                
+                <div class="glass-panel budget-box">
+                    <!-- Action Control Bar -->
+                    <div class="budget-control-bar">
+                        <div class="btn-group">
+                            <button class="action-btn btn-save-pass" onclick="saveWithPasswordPrompt()">🔒 비밀번호로 GitHub에 저장</button>
+                            <button class="action-btn btn-save" onclick="saveReceiptData(false)">💾 로컬에 빠른 저장</button>
+                            <button class="action-btn btn-load" onclick="fetchGitHubReceiptData(true)">🌐 GitHub 최신 파일 불러오기</button>
+                            <button class="action-btn btn-export" onclick="exportReceiptJSON()">📥 JSON 백업 파일 받기</button>
+                            <button class="action-btn btn-reset" onclick="resetReceiptData()">🔄 초기화</button>
+                        </div>
+                        <div class="last-saved-info" id="last-saved-time">마지막 저장: 없음</div>
+                    </div>
+
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                        * 💡 <strong>분할 결제 기능</strong>: 각 항목별로 <code>[+ 결제 추가]</code> 버튼을 누르면 분할 결제 내역(항공권 나눔 결제 등)을 여러 개 추가할 수 있습니다.<br>
+                        * 💡 <strong>쉬운 숫자 입력</strong>: 금액 입력 시 <strong>천 단위 쉼표(,)</strong>가 자동 표시되며, <code>[+1만]</code> <code>[+10만]</code> <code>[+50만]</code> <code>[+100만]</code> 버튼으로 쉽게 금액을 추가할 수 있습니다.
+                    </p>
+
+                    <div id="budget-categories-container">
+                        <!-- Dynamic multi-receipt items rendered by JS -->
+                    </div>
+
+                    <div class="overall-summary-card">
+                        <div class="summary-title">📊 8인 전체 3박 4일 총 결산</div>
+                        <div class="summary-values" id="overall-summary-values">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. 준비물 체크리스트 -->
+            <section style="margin-bottom: 45px;">
+                <h2 class="section-title">📋 8인 대가족 준비물 체크리스트</h2>
+                
+                <div class="glass-panel checklist-box">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="font-weight: 700; color: var(--accent-teal);">준비 진행률</span>
+                        <span id="progress-text" style="font-weight: 800; color: var(--accent-emerald);">0% (0/0)</span>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar-fill" id="progress-fill"></div>
+                    </div>
+
+                    <div class="filter-buttons">
+                        <button class="filter-btn active" onclick="filterChecklist('all')">전체 보기</button>
+                        <button class="filter-btn" onclick="filterChecklist('essential')">🔴 필수 서류</button>
+                        <button class="filter-btn" onclick="filterChecklist('car')">🚗 렌터카 준비물</button>
+                        <button class="filter-btn" onclick="filterChecklist('kids')">👶 초등학생 특화</button>
+                        <button class="filter-btn" onclick="filterChecklist('seniors')">👵 부모님 특화</button>
+                        <button class="filter-btn" onclick="filterChecklist('weather')">☀️ 9월 날씨 대비</button>
+                    </div>
+
+                    <div class="checklist-grid" id="checklist-container"></div>
+                </div>
+            </section>
+
+            <footer>
+                🌺 9월 오키나와 8인 대가족 여행 가이드 | Created with Antigravity
+            </footer>
+        </div>
+
+        <!-- Floating Gemini AI Chatbot Button & Modal -->
+        <div class="chat-fab" onclick="openGeminiChatbot()">
+            💬 Gemini AI 오키나와 비서
+        </div>
+
+        <div class="chat-modal-overlay" id="chat-modal">
+            <div class="chat-window">
+                <div class="chat-header">
+                    <h3>🤖 Gemini AI 오키나와 여행 가이드</h3>
+                    <button class="chat-close-btn" onclick="closeGeminiChatbot()">&times;</button>
+                </div>
+                
+                <div class="chat-body" id="chat-messages">
+                    <div class="chat-msg bot">
+                        안녕하세요! 🌺 오키나와 8인 대가족 여행을 돕는 <strong>Gemini AI 가이드 비서</strong>입니다.<br><br>
+                        3박 4일 일정, 긴초 숙소 맛집, 츄라우미 수족관 팁, 날씨, 예산 등 무엇이든 물어보세요!
+                    </div>
+                </div>
+
+                <div class="chip-container">
+                    <button class="chip-btn" onclick="sendQuickQuestion('1일차 긴초 저녁 맛집 추천해 줘')">💡 1일차 긴초 저녁 맛집</button>
+                    <button class="chip-btn" onclick="sendQuickQuestion('2일차 아침 장보기 마트 팁 알려줘')">💡 2일차 아침 장보기 팁</button>
+                    <button class="chip-btn" onclick="sendQuickQuestion('3일차 A안 대자연 vs B안 쇼핑 차이가 뭐야?')">💡 3일차 A안 vs B안</button>
+                    <button class="chip-btn" onclick="sendQuickQuestion('오키나와 필수 8인 준비물 3가지 알려줘')">💡 필수 준비물 3가지</button>
+                </div>
+
+                <div class="chat-input-area">
+                    <input type="text" id="chat-input-text" class="chat-text-input" placeholder="질문을 입력하세요..." onkeypress="handleChatKeyPress(event)">
+                    <button class="chat-send-btn" onclick="sendChatMessage()">전송</button>
+                </div>
             </div>
-        </section>
-
-        <!-- 6. 준비물 체크리스트 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">📋 8인 대가족 준비물 체크리스트</h2>
-            
-            <div class="glass-panel checklist-box">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                    <span style="font-weight: 700; color: var(--accent-teal);">준비 진행률</span>
-                    <span id="progress-text" style="font-weight: 800; color: var(--accent-emerald);">0% (0/0)</span>
-                </div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar-fill" id="progress-fill"></div>
-                </div>
-
-                <div class="filter-buttons">
-                    <button class="filter-btn active" onclick="filterChecklist('all')">전체 보기</button>
-                    <button class="filter-btn" onclick="filterChecklist('essential')">🔴 필수 서류</button>
-                    <button class="filter-btn" onclick="filterChecklist('car')">🚗 렌터카 준비물</button>
-                    <button class="filter-btn" onclick="filterChecklist('kids')">👶 초등학생 특화</button>
-                    <button class="filter-btn" onclick="filterChecklist('seniors')">👵 부모님 특화</button>
-                    <button class="filter-btn" onclick="filterChecklist('weather')">☀️ 9월 날씨 대비</button>
-                </div>
-
-                <div class="checklist-grid" id="checklist-container"></div>
-            </div>
-        </section>
-
-        <footer>
-            🌺 9월 오키나와 8인 대가족 여행 가이드 | Created with Antigravity
-        </footer>
+        </div>
     </div>
 
     <!-- Toast Component -->
@@ -1462,45 +1614,37 @@
         <span>✅</span> <span id="toast-text">영수증 내역이 성공적으로 저장되었습니다!</span>
     </div>
 
-    <!-- Floating Gemini AI Chatbot Button & Modal -->
-    <div class="chat-fab" onclick="openGeminiChatbot()">
-        🔒 💬 Gemini AI 오키나와 비서
-    </div>
-
-    <div class="chat-modal-overlay" id="chat-modal">
-        <div class="chat-window">
-            <div class="chat-header">
-                <h3>🤖 Gemini AI 오키나와 여행 가이드</h3>
-                <button class="chat-close-btn" onclick="closeGeminiChatbot()">&times;</button>
-            </div>
-            
-            <div class="chat-body" id="chat-messages">
-                <div class="chat-msg bot">
-                    안녕하세요! 🌺 오키나와 8인 대가족 여행을 돕는 <strong>Gemini AI 가이드 비서</strong>입니다.<br><br>
-                    3박 4일 일정, 긴초 숙소 맛집, 츄라우미 수족관 팁, 날씨, 예산 등 무엇이든 물어보세요!
-                </div>
-            </div>
-
-            <div class="chip-container">
-                <button class="chip-btn" onclick="sendQuickQuestion('1일차 긴초 저녁 맛집 추천해 줘')">💡 1일차 긴초 저녁 맛집</button>
-                <button class="chip-btn" onclick="sendQuickQuestion('2일차 아침 장보기 마트 팁 알려줘')">💡 2일차 아침 장보기 팁</button>
-                <button class="chip-btn" onclick="sendQuickQuestion('3일차 A안 대자연 vs B안 쇼핑 차이가 뭐야?')">💡 3일차 A안 vs B안</button>
-                <button class="chip-btn" onclick="sendQuickQuestion('오키나와 필수 8인 준비물 3가지 알려줘')">💡 필수 준비물 3가지</button>
-            </div>
-
-            <div class="chat-input-area">
-                <input type="text" id="chat-input-text" class="chat-text-input" placeholder="질문을 입력하세요..." onkeypress="handleChatKeyPress(event)">
-                <button class="chat-send-btn" onclick="sendChatMessage()">전송</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Leaflet JS for Map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
         const SECRET_PASS = "0916";
-        let isChatbotAuthenticated = false;
+
+        // Site Password Lock Screen System
+        function verifySitePassword() {
+            const inputVal = document.getElementById('site-pass-input').value.trim();
+            const errEl = document.getElementById('lock-err-text');
+
+            if (inputVal === SECRET_PASS) {
+                document.getElementById('site-lock-screen').style.display = 'none';
+                document.getElementById('main-app-content').style.display = 'block';
+                sessionStorage.setItem('okinawa_site_authenticated', 'true');
+                showToast('🔓 비밀번호 인증 완료! 오키나와 여행 가이드에 오신 것을 환영합니다.');
+            } else {
+                errEl.style.display = 'block';
+            }
+        }
+
+        function handleLockKeyPress(e) {
+            if (e.key === 'Enter') verifySitePassword();
+        }
+
+        function checkAuthOnLoad() {
+            if (sessionStorage.getItem('okinawa_site_authenticated') === 'true') {
+                document.getElementById('site-lock-screen').style.display = 'none';
+                document.getElementById('main-app-content').style.display = 'block';
+            }
+        }
 
         // D-Day Counter Calculation
         function initDDay() {
@@ -1557,18 +1701,8 @@
             }
         }
 
-        // Password Protected Gemini Chatbot Open
+        // Gemini Chatbot Open & Interaction
         function openGeminiChatbot() {
-            if (!isChatbotAuthenticated) {
-                const pass = prompt('🔒 가족 비밀번호를 입력하세요:');
-                if (pass === null) return;
-                if (pass.trim() !== SECRET_PASS) {
-                    alert('❌ 비밀번호가 올바르지 않습니다!');
-                    return;
-                }
-                isChatbotAuthenticated = true;
-                showToast('🔓 Gemini AI 가이드 비서가 인증되었습니다!');
-            }
             document.getElementById('chat-modal').classList.add('open');
         }
 
@@ -2094,6 +2228,7 @@
 
         // Initialize Page
         window.addEventListener('DOMContentLoaded', () => {
+            checkAuthOnLoad();
             initDDay();
             fetchGitHubReceiptData(false);
             initMap();
