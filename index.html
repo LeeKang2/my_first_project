@@ -881,13 +881,13 @@
 
         <!-- 5. 8인 3박 4일 예산안 & 비밀번호 인증 GitHub 저장 시스템 -->
         <section style="margin-bottom: 45px;">
-            <h2 class="section-title">💰 8인 3박 4일 가계부 & 비밀번호(0916) 저장 시스템</h2>
+            <h2 class="section-title">💰 8인 3박 4일 가계부 & 비밀번호 인증 GitHub 저장 시스템</h2>
             
             <div class="glass-panel budget-box">
                 <!-- Action Control Bar -->
                 <div class="budget-control-bar">
                     <div class="btn-group">
-                        <button class="action-btn btn-save-pass" onclick="saveWithPasswordPrompt()">🔒 비밀번호(0916)로 GitHub에 저장</button>
+                        <button class="action-btn btn-save-pass" onclick="saveWithPasswordPrompt()">🔒 비밀번호로 GitHub에 저장</button>
                         <button class="action-btn btn-save" onclick="saveReceiptData(false)">💾 로컬에 빠른 저장</button>
                         <button class="action-btn btn-load" onclick="fetchGitHubReceiptData(true)">🌐 GitHub 최신 파일 불러오기</button>
                         <button class="action-btn btn-export" onclick="exportReceiptJSON()">📥 JSON 백업 파일 받기</button>
@@ -897,7 +897,7 @@
                 </div>
 
                 <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
-                    * 🔒 <strong>[비밀번호로 GitHub에 저장]</strong>을 누르시고 지정 비밀번호 <strong>`0916`</strong>을 입력하시면 `data/receipts.json` 파일로 자동 생성/업데이트되어 온 가족이 어디서나 함께 볼 수 있습니다.
+                    * 🔒 <strong>[비밀번호로 GitHub에 저장]</strong>을 누르시고 지정 비밀번호를 입력하시면 `data/receipts.json` 파일로 자동 생성/업데이트되어 온 가족이 어디서나 함께 볼 수 있습니다.
                 </p>
 
                 <table class="budget-table">
@@ -1149,12 +1149,12 @@
             if (inputPass === null) return;
 
             if (inputPass.trim() !== SECRET_PASS) {
-                alert('❌ 비밀번호가 올바르지 않습니다! (설정된 비밀번호: 0916)');
+                alert('❌ 비밀번호가 올바르지 않습니다!');
                 return;
             }
 
             saveReceiptData(false);
-            showToast('🔓 비밀번호(0916) 인증 완료! data/receipts.json 파일로 저장되었습니다! 🎉');
+            showToast('🔓 비밀번호 인증 완료! data/receipts.json 파일로 저장되었습니다! 🎉');
         }
 
         function fetchGitHubReceiptData(showNotification = false) {
