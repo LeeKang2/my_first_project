@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>🌺 9월 오키나와 8인 대가족 여행 완벽 가이드 & 체크리스트</title>
-    <meta name="description" content="부모님 2분, 초등학생 2명, 성인 4명 (총 8인) 3박 4일 오키나와 가족 여행을 위한 렌터카 2대, 동선 지도, 예산표, 체크리스트 통합 가이드">
+    <meta name="description" content="부모님 2분, 초등학생 2명, 성인 4명 (총 8인) 3박 4일 오키나와 가족 여행 1~4일차 상세 코스, 동선 지도, 예산표, 체크리스트 통합 가이드">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +45,7 @@
             color: var(--text-main);
             min-height: 100vh;
             line-height: 1.6;
-            padding-bottom: 60px;
+            padding-bottom: 80px;
         }
 
         .glass-panel {
@@ -143,6 +143,153 @@
             padding-left: 12px;
         }
 
+        /* Day-by-Day Itinerary Styling */
+        .itinerary-day-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .day-tab-btn {
+            flex: 1;
+            min-width: 140px;
+            padding: 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            color: var(--text-muted);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .day-tab-btn h4 { font-size: 1.05rem; font-weight: 800; }
+        .day-tab-btn p { font-size: 0.8rem; margin-top: 2px; }
+
+        .day-tab-btn.active {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.25), rgba(6, 214, 160, 0.2));
+            border-color: var(--accent-ocean);
+            color: #fff;
+            box-shadow: 0 4px 15px rgba(0, 210, 255, 0.2);
+        }
+
+        .itinerary-card {
+            padding: 28px;
+            margin-bottom: 30px;
+        }
+
+        .day-header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-ocean);
+            color: #041226;
+            font-weight: 900;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .time-step-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px dashed rgba(0, 210, 255, 0.3);
+            margin-top: 15px;
+        }
+
+        .time-step-item {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+        }
+
+        .time-step-item::before {
+            content: '';
+            position: absolute;
+            left: -27px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--accent-teal);
+            box-shadow: 0 0 10px var(--accent-teal);
+        }
+
+        .step-time {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 800;
+            color: var(--accent-teal);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .step-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 6px;
+        }
+
+        .food-box {
+            background: rgba(255, 209, 102, 0.08);
+            border: 1px solid rgba(255, 209, 102, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-top: 8px;
+            font-size: 0.9rem;
+        }
+
+        .food-box strong { color: var(--accent-gold); }
+
+        .tip-pill-box {
+            background: rgba(6, 214, 160, 0.08);
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            border-radius: var(--radius-sm);
+            padding: 12px 15px;
+            margin-top: 8px;
+            font-size: 0.88rem;
+        }
+
+        .tip-pill-box strong { color: var(--accent-emerald); }
+
+        /* Option A / B Selector Styling */
+        .option-toggle-bar {
+            display: flex;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .opt-btn {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            color: var(--text-muted);
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .opt-btn.active-a {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.25), rgba(0, 210, 255, 0.2));
+            border-color: var(--accent-emerald);
+            color: #fff;
+        }
+
+        .opt-btn.active-b {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.25), rgba(255, 107, 107, 0.2));
+            border-color: var(--accent-gold);
+            color: #fff;
+        }
+
         /* Weather Section */
         .weather-grid {
             display: grid;
@@ -224,73 +371,6 @@
 
         .badge-100 { background: var(--accent-emerald); color: #021a12; }
         .badge-normal { background: rgba(255, 255, 255, 0.15); color: var(--text-muted); }
-
-        /* Rental Car Section */
-        .rental-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .rental-card {
-            padding: 22px;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .rental-card:hover {
-            transform: translateY(-5px);
-            background: var(--bg-card-hover);
-            border-color: var(--accent-ocean);
-        }
-
-        .rank-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent-gold);
-            color: #000;
-            font-weight: 800;
-            font-size: 0.75rem;
-            padding: 3px 10px;
-            border-radius: 20px;
-        }
-
-        .rental-card h3 { font-size: 1.25rem; margin-bottom: 8px; color: #fff; }
-        .rental-card p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 18px; }
-
-        .btn-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, var(--accent-ocean), #0099ff);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 700;
-            border-radius: var(--radius-md);
-            transition: opacity 0.2s ease;
-        }
-
-        .btn-link:hover { opacity: 0.9; }
-
-        .tip-banner {
-            background: rgba(255, 209, 102, 0.1);
-            border: 1px solid rgba(255, 209, 102, 0.3);
-            border-radius: var(--radius-md);
-            padding: 18px;
-            margin-top: 15px;
-            font-size: 0.92rem;
-        }
-
-        .tip-banner strong { color: var(--accent-gold); }
 
         /* Map Section & Custom Search */
         #map-container {
@@ -376,7 +456,7 @@
         .dist-card h4 { font-size: 0.95rem; color: var(--accent-teal); margin-bottom: 4px; }
         .dist-card p { font-size: 0.85rem; color: var(--text-muted); }
 
-        /* Budget Section & Smart Multi-Receipt Inputs */
+        /* Budget Section & Multi-Receipt Inputs */
         .budget-box { padding: 25px; margin-bottom: 40px; }
 
         .budget-control-bar {
@@ -432,7 +512,6 @@
             font-weight: 600;
         }
 
-        /* Category Item Card Block */
         .category-budget-block {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -497,7 +576,6 @@
             background: rgba(0, 210, 255, 0.3);
         }
 
-        /* Sub-Receipt Line Row */
         .sub-receipt-row {
             display: flex;
             gap: 10px;
@@ -544,7 +622,6 @@
             border-color: var(--accent-teal);
         }
 
-        /* Quick Amount Add Buttons */
         .quick-btn-group {
             display: flex;
             gap: 4px;
@@ -611,7 +688,7 @@
         .toast {
             position: fixed;
             bottom: 30px;
-            right: 30px;
+            left: 30px;
             background: linear-gradient(135deg, var(--accent-emerald), #05b383);
             color: #021a12;
             padding: 14px 24px;
@@ -632,6 +709,174 @@
         .toast.show {
             opacity: 1;
             transform: translateY(0);
+        }
+
+        /* Floating Gemini Chatbot Widget */
+        .chat-fab {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, var(--accent-ocean), var(--accent-emerald));
+            color: #021a12;
+            padding: 14px 22px;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 210, 255, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 999;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .chat-fab:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.6);
+        }
+
+        .chat-modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .chat-modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .chat-window {
+            width: 400px;
+            max-width: 90vw;
+            height: 580px;
+            max-height: 80vh;
+            background: #0d213a;
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-lg);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, rgba(0, 210, 255, 0.2), rgba(6, 214, 160, 0.2));
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-glass);
+        }
+
+        .chat-header h3 { font-size: 1.05rem; font-weight: 800; color: #fff; }
+
+        .chat-close-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .chat-body {
+            flex-grow: 1;
+            padding: 16px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .chat-msg {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            word-break: break-word;
+        }
+
+        .chat-msg.bot {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .chat-msg.user {
+            background: var(--accent-ocean);
+            color: #041226;
+            font-weight: 700;
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .chip-container {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.3);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .chip-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: var(--accent-teal);
+            font-size: 0.76rem;
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .chip-btn:hover {
+            background: rgba(0, 210, 255, 0.2);
+            color: #fff;
+        }
+
+        .chat-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 14px;
+            background: rgba(0, 0, 0, 0.4);
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .chat-text-input {
+            flex-grow: 1;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--border-glass);
+            border-radius: var(--radius-md);
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        .chat-send-btn {
+            padding: 10px 18px;
+            background: var(--accent-ocean);
+            color: #041226;
+            font-weight: 800;
+            border: none;
+            border-radius: var(--radius-md);
+            cursor: pointer;
         }
 
         /* Checklist Section */
@@ -753,29 +998,6 @@
         .tag-yellow { background: rgba(255, 209, 102, 0.2); color: var(--accent-gold); border: 1px solid rgba(255, 209, 102, 0.4); }
         .tag-green { background: rgba(6, 214, 160, 0.2); color: var(--accent-emerald); border: 1px solid rgba(6, 214, 160, 0.4); }
 
-        /* Timeline & Tips */
-        .timeline-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .time-card {
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--border-glass);
-            border-radius: var(--radius-md);
-        }
-
-        .time-badge {
-            font-family: 'Outfit', sans-serif;
-            font-weight: 800;
-            color: var(--accent-ocean);
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-        }
-
         footer {
             text-align: center;
             padding: 30px;
@@ -793,7 +1015,7 @@
         <header>
             <span class="badge-tag">✈️ 9월 오키나와 8인 대가족 여행 가이드</span>
             <h1>부모님 & 아이와 함께하는 오키나와 3박 4일</h1>
-            <p class="subtitle">2026년 9월 16일(수) ~ 9월 19일(토) | 렌터카 2대 대여 완벽 대비</p>
+            <p class="subtitle">2026년 9월 16일(수) ~ 9월 19일(토) | 긴초 숙소 중심 완벽 통합 코스</p>
             
             <!-- D-Day Counter -->
             <div class="glass-panel dday-box">
@@ -809,7 +1031,226 @@
             </div>
         </header>
 
-        <!-- 1. 9/16 ~ 9/19 한국 & 오키나와 기상 예보 -->
+        <!-- 1. 3박 4일 상세 일정표 대시보드 (신규 핵심 코스) -->
+        <section style="margin-bottom: 45px;">
+            <h2 class="section-title">📅 8인 대가족 3박 4일 상세 추천 일자별 코스</h2>
+            
+            <div class="itinerary-day-tabs">
+                <button class="day-tab-btn active" onclick="switchDayTab('day1', this)">
+                    <h4>1일차 (9/16 수)</h4>
+                    <p>입국 & 긴초 숙소 첫 물놀이</p>
+                </button>
+                <button class="day-tab-btn" onclick="switchDayTab('day2', this)">
+                    <h4>2일차 (9/17 목)</h4>
+                    <p>츄라우미 & 숙소 스노클링</p>
+                </button>
+                <button class="day-tab-btn" onclick="switchDayTab('day3', this)">
+                    <h4>3일차 (9/18 금)</h4>
+                    <p>대자연 vs 쇼핑 & 불빛축제</p>
+                </button>
+                <button class="day-tab-btn" onclick="switchDayTab('day4', this)">
+                    <h4>4일차 (9/19 토)</h4>
+                    <p>우미카지 테라스 & 귀국</p>
+                </button>
+            </div>
+
+            <!-- 1일차 상세 카드 -->
+            <div class="glass-panel itinerary-card" id="day1-card">
+                <span class="day-header-badge">🛬 1일차: 입국 ➔ 나하 점검 ➔ 긴초 숙소 도착 후 첫 물놀이</span>
+                
+                <div class="time-step-list">
+                    <div class="time-step-item">
+                        <div class="step-time">13:30 ~ 15:00</div>
+                        <div class="step-title">나하 공항 도착 & 렌터카 2대 수령</div>
+                        <div class="food-box">
+                            🍱 <strong>추천 점심 식사:</strong><br>
+                            - <strong>잭스 스테이크 하우스 (Jack's Steak House):</strong> 오키나와 가성비 1위 스테이크 맛집<br>
+                            - <strong>마키시 공영시장 (Makishi Public Market):</strong> 1층 해산물 구경 ➔ 2층 식당가에서 회, 생선구이, 볶음요리 현지 주문
+                        </div>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">15:30 ~ 16:30</div>
+                        <div class="step-title">나하 시내 가벼운 산책</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">
+                            - <strong>후쿠슈엔 (Fukushuen):</strong> 평지 중국식 정원에서 가벼운 산책 OR <strong>슈리성 공원</strong>
+                        </p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">16:30 ~ 17:30</div>
+                        <div class="step-title">고속도로 이동 ➔ 긴초(Kincho) 숙소 도착</div>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">나하에서 긴초 숙소까지 차로 약 50분 소요 (고속도로 이용)</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">17:30 ~ 19:00</div>
+                        <div class="step-title">🏖️ [숙소 타임] 체크인 & 수영장/해변 1차 물놀이</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">숙소 체크인 후 전용 수영장 및 앞바다 해변에서 가벼운 1차 수영 타임</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">19:00 ~</div>
+                        <div class="step-title">긴초 근처 여유로운 저녁 식사</div>
+                        <div class="food-box">
+                            🍱 <strong>긴초 저녁 식사 후보 (매장 또는 테이크아웃):</strong><br>
+                            - <strong>King Tacos (킹타코스 본점):</strong> 오키나와 대표 타코라이스 맛집<br>
+                            - <strong>Il Mattarello Pasta e Pizza:</strong> 정통 수제 파스타 & 화덕 피자<br>
+                            - <strong>ALOHA burger / 66 Diner:</strong> 육즙 가득 수제 버거 & 아메리칸 다이너
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2일차 상세 카드 -->
+            <div class="glass-panel itinerary-card" id="day2-card" style="display:none;">
+                <span class="day-header-badge">🐋 2일차: 추라우미 수족관 & 오후 집중 해변·수영장 타임</span>
+                
+                <div class="time-step-list">
+                    <div class="time-step-item">
+                        <div class="step-time">아침 식사 팁</div>
+                        <div class="step-title">숙소 아침 장보기 식사</div>
+                        <div class="tip-pill-box">
+                            💡 <strong>추천 아침 장보기 목록:</strong><br>
+                            - <strong>긴초 인근 San-A / 맥스밸류 마트:</strong> 즉석 미소된장국, 햇반, 조미김, 계란말이, 오키나와 두부(지마미두부/유시두부), 과일, 우유, 요거트, 오키나와 특산 소시지<br>
+                            - <strong>편의점 (로손/세븐일레븐/패밀리마트):</strong> 타마고 샌드위치, 오니기리, 푸딩, 즉석 빵
+                        </div>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">오전 (09:30 ~ 12:30)</div>
+                        <div class="step-title">오키나와 추라우미 수족관 관람</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">
+                            쾌적한 에어컨 실내에서 세계 최대급 대형 고래상어 및 만타 가오리 대형 수조 관람 (초등학생 & 부모님 최적)
+                        </p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">12:30 ~ 14:00</div>
+                        <div class="step-title">모토부 / 나고 근처 점심 식사</div>
+                        <div class="food-box">
+                            🍱 <strong>모토부 추천 맛집:</strong><br>
+                            - <strong>키시모토 식당 (Kishimoto):</strong> 100년 전통 수제 소바 노포<br>
+                            - <strong>키시모토 야에다케점:</strong> 본점 대비 주차 및 내부가 매우 쾌적<br>
+                            - <strong>레스토랑 플리퍼 (Flipper):</strong> 비치 전망 정통 비프 스테이크<br>
+                            - <strong>야키니쿠 모토부 목장 모토부점:</strong> 최고급 와규 가성비 런치 세트
+                        </div>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">14:30 ~ 18:00</div>
+                        <div class="step-title">🤿 [숙소 집중 물놀이 타임] 해변 스노클링 & 수영장 & 모래놀이</div>
+                        <div class="tip-pill-box">
+                            🏊‍♂️ <strong>물놀이 동선:</strong> 숙소 앞바다 수영 ➔ 숙소 수영장으로 바로 이동해 깨끗이 씻고 놀기 (아이들과 부모님 모두 만족)
+                        </div>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">18:30 ~</div>
+                        <div class="step-title">긴초 현지 맛집 저녁 식사</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">씻고 나와 긴초 근처 맛집에서 맛있는 저녁 식사</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3일차 상세 카드 (선택 안 토글 기능 포함) -->
+            <div class="glass-panel itinerary-card" id="day3-card" style="display:none;">
+                <span class="day-header-badge">🌿 3일차: 대자연 (또는 쇼핑) & 야간 불빛 축제</span>
+                
+                <div class="option-toggle-bar">
+                    <button class="opt-btn active-a" id="btn-opt-a" onclick="switchDay3Opt('a')">🌿 [A안] 대자연 (다이세키린잔 & 항구 생선요리)</button>
+                    <button class="opt-btn" id="btn-opt-b" onclick="switchDay3Opt('b')">🛍️ [B안] 쇼핑/실내 (이온몰 라이카무 포켓몬센터)</button>
+                </div>
+
+                <div class="time-step-list">
+                    <!-- A안 콘텐츠 -->
+                    <div id="day3-content-a">
+                        <div class="time-step-item">
+                            <div class="step-time">오전 (09:30 ~ 13:00)</div>
+                            <div class="step-title">ASMUI Spiritual Hikes (다이세키린잔) & 점심</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">
+                                20분 평탄 데크길 배리어 프리 코스로 부모님과 아이 모두 편안한 기암괴석 및 열대 카르스트 산책
+                            </p>
+                            <div class="food-box">
+                                🍱 <strong>A안 점심 식사:</strong><br>
+                                - <strong>쿠니가미 미나토 쇼쿠도 (Kunigami Port Shokudo):</strong> 다이세키린잔 20분 거리, 항구 바로 앞 생선요리 맛집 (14시 라스트오더)<br>
+                                - <strong>미치노에키 유이유이 구니가미:</strong> 넓은 휴게소 푸드코트
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- B안 콘텐츠 -->
+                    <div id="day3-content-b" style="display:none;">
+                        <div class="time-step-item">
+                            <div class="step-time">오전 (09:30 ~ 13:00)</div>
+                            <div class="step-title">이온몰 오키나와 라이카무 & 점심</div>
+                            <p style="font-size:0.9rem; color:var(--text-muted);">
+                                대형 실내 쇼핑몰에서 쾌적하게 포켓몬센터 구경, 대형 수족관 로비 감상 및 대형 푸드코트 점심 식사
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- 3일차 오후 공통 일정 -->
+                    <div class="time-step-item">
+                        <div class="step-time">14:00 ~ 17:30</div>
+                        <div class="step-title">잔파곶 등대 또는 자키미 성터 산책</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">숙소 근처 멋진 등대 해안절벽 산책 및 인생샷 촬영</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">18:00 ~ 20:00</div>
+                        <div class="step-title">🦙 동남식물원 추라 야시 파크 (카피바라 & 야간 불빛 축제)</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">아이들이 좋아하는 카피바라 먹이주기 체험 및 화려한 야간 불빛 조명 축제 관람</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">추가 꿀팁 스팟</div>
+                        <div class="step-title">비세후쿠기 가로수길 & 만좌모 일몰</div>
+                        <div class="tip-pill-box">
+                            🚲 <strong>비세후쿠기 자전거 산책:</strong> 입구 화장실 맞은편 안내소 근처 무료 주차 (자전거 대여 시 여권 필요, 해안길까지 라이딩 가능)<br>
+                            🍹 <strong>아세로라 농장:</strong> 상큼한 Acerola Fresh 신선 음료 디저트<br>
+                            🌅 <strong>만좌모:</strong> 코끼리 바위 해질녘 일몰 감상 (선택: 부세나 해중공원)
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4일차 상세 카드 -->
+            <div class="glass-panel itinerary-card" id="day4-card" style="display:none;">
+                <span class="day-header-badge">🛫 4일차: 모닝 바다 산책/수영 ➔ 우미카지 테라스 ➔ 귀국</span>
+                
+                <div class="time-step-list">
+                    <div class="time-step-item">
+                        <div class="step-time">08:30 ~ 09:30</div>
+                        <div class="step-title">[체크아웃 전] 숙소 앞바다 모닝 산책 및 가벼운 수영</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">마지막 날 아침 긴초 숙소 앞 아침 바다 산책 및 상쾌한 모닝 수영</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">10:00 ~ 11:00</div>
+                        <div class="step-title">숙소 체크아웃 후 남부 공항 방면 이동</div>
+                        <p style="font-size:0.88rem; color:var(--text-muted);">짐 정리 후 고속도로로 남부 공항 방면 이동 (약 50분 소요)</p>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">11:15 ~ 12:30</div>
+                        <div class="step-title">🥞 세나가섬 우미카지테라스 (Umikaji Terrace)</div>
+                        <div class="food-box">
+                            🍱 <strong>점심 & 디저트:</strong><br>
+                            하얀 그리스풍 언덕 건물에서 에메랄드빛 바다와 비행기 이착륙을 보며 명물 푹신한 수플레 팬케이크 & 디저트 점심 식사
+                        </div>
+                    </div>
+
+                    <div class="time-step-item">
+                        <div class="step-time">12:30 ~ 13:30</div>
+                        <div class="step-title">렌터카 2대 반납 ➔ 셔틀 이동 ➔ 공항 탑승 수속 후 귀국</div>
+                        <p style="font-size:0.9rem; color:var(--text-muted);">렌터카 2대 반납 및 셔틀버스 이동 후 나하 공항 탑승 수속을 마치고 안전하게 한국 귀국</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 9/16 ~ 9/19 한국 & 오키나와 기상 예보 -->
         <section style="margin-bottom: 45px;">
             <h2 class="section-title">🌤️ 9/16 ~ 9/19 날씨 예상 및 기상청 정보 (KMA / JMA)</h2>
             <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
@@ -883,7 +1324,7 @@
             </div>
         </section>
 
-        <!-- 2. 환율 & 은행별 엔화 살 때 우대율 -->
+        <!-- 3. 환율 & 은행별 엔화 살 때 우대율 -->
         <section style="margin-bottom: 45px;">
             <h2 class="section-title">💴 엔화 환율 & 주요 은행/카드사 환율 우대 비교</h2>
             <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
@@ -925,71 +1366,23 @@
             </div>
         </section>
 
-        <!-- 3. 렌터카 Top 3 & 2대 대여 가이드 -->
-        <section style="margin-bottom: 45px;">
-            <h2 class="section-title">🚗 렌터카 예약 Top 3 & 2대 운용 필수 팁</h2>
-            <div class="rental-cards">
-                <!-- 1위 타비라이 -->
-                <div class="glass-panel rental-card">
-                    <div>
-                        <span class="rank-badge">1위 추천</span>
-                        <h3>🥇 타비라이 (Tabirai)</h3>
-                        <p>일본 현지 렌터카 1위 비교 사이트. 면책보장보험(CDW) 기본 포함.</p>
-                    </div>
-                    <a href="https://www.tabirai.net/car/okinawa/" target="_blank" rel="noopener noreferrer" class="btn-link">
-                        타비라이 예약 바로가기 ↗
-                    </a>
-                </div>
-
-                <!-- 2위 OTS 렌터카 -->
-                <div class="glass-panel rental-card">
-                    <div>
-                        <span class="rank-badge">2위 추천</span>
-                        <h3>🥈 OTS 렌터카</h3>
-                        <p>오키나와 최대 규모 전용 렌터카. 한국어 전용 카운터 및 사고 대처 우수.</p>
-                    </div>
-                    <a href="https://www.otsinternational.jp/otsrentacar/ko/" target="_blank" rel="noopener noreferrer" class="btn-link">
-                        OTS 렌터카 예약 바로가기 ↗
-                    </a>
-                </div>
-
-                <!-- 3위 클룩 -->
-                <div class="glass-panel rental-card">
-                    <div>
-                        <span class="rank-badge">3위 추천</span>
-                        <h3>🥉 클룩 (Klook)</h3>
-                        <p>실시간 가격 비교 및 할인가 제공. 한국어 결제 편리.</p>
-                    </div>
-                    <a href="https://www.klook.com/ko/car-rentals/city/67-okinawa-car-rentals/" target="_blank" rel="noopener noreferrer" class="btn-link">
-                        클룩 렌터카 비교 바로가기 ↗
-                    </a>
-                </div>
-            </div>
-
-            <div class="tip-banner">
-                💡 <strong>렌터카 2대 대여 시 필수 확인:</strong><br>
-                운전할 2명 모두 ①국제운전면허증 원본, ②한국 운전면허증 원본, ③여권을 현장에 꼭 지참하세요.
-            </div>
-        </section>
-
         <!-- 4. 한국어 지도 & 숙소 주소 입력 동선 지도 -->
         <section style="margin-bottom: 45px;">
-            <h2 class="section-title">🗺️ 한국어 번역 지도 & 숙소 주소 동선 파악 (Google Maps KR)</h2>
+            <h2 class="section-title">🗺️ 오키나와 주요 명소 동선 지도 (Google Maps KR)</h2>
             <p style="color: var(--text-muted); margin-bottom: 15px; font-size: 0.95rem;">
                 지도의 모든 지역명/도로명이 <strong>한글(한국어)로 완전 번역 표기</strong>됩니다. 숙소 위치를 입력하여 주요 명소 동선을 확인하세요.
             </p>
 
             <!-- Custom Address Search Box -->
             <div class="search-address-box">
-                <input type="text" id="custom-address-input" class="search-input" placeholder="예: 힐튼 오키나와 차탄 리조트 또는 오키나와 차탄" value="힐튼 오키나와 차탄 리조트">
+                <input type="text" id="custom-address-input" class="search-input" placeholder="예: 긴초 숙소 위치 또는 힐튼 오키나와 차탄 리조트" value="오키나와 긴초">
                 <button class="search-btn" onclick="searchCustomAddress()">📍 한국어 지도에 숙소 핀 꽂기</button>
             </div>
 
             <div class="location-tabs">
-                <button class="loc-btn active" onclick="presetLocation('chatan')">📍 [중부] 차탄 (아메리칸빌리지 주변)</button>
-                <button class="loc-btn" onclick="presetLocation('onna')">📍 [중북부] 은나 (선마리나/만좌모 주변)</button>
-                <button class="loc-btn" onclick="presetLocation('naha')">📍 [남부] 나하 (국제거리 주변)</button>
+                <button class="loc-btn active" onclick="presetLocation('kincho')">📍 [긴초] 1~3박 숙소 지역 (Kincho)</button>
                 <button class="loc-btn" onclick="presetLocation('motobu')">📍 [북부] 모토부 (츄라우미 주변)</button>
+                <button class="loc-btn" onclick="presetLocation('naha')">📍 [남부] 나하 (공항/국제거리)</button>
             </div>
 
             <div class="glass-panel" style="padding: 15px;">
@@ -1059,41 +1452,6 @@
             </div>
         </section>
 
-        <!-- 7. 준비 타임라인 -->
-        <section>
-            <h2 class="section-title">📅 준비 타임라인</h2>
-            <div class="timeline-container">
-                <div class="glass-panel time-card">
-                    <div class="time-badge">D-30 (8월 중순)</div>
-                    <h4 style="margin-bottom: 6px;">서류 & 렌터카 확정</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">
-                        - 운전자 2명 국제운전면허증 발급<br>- 렌터카 2대 예약 완료
-                    </p>
-                </div>
-                <div class="glass-panel time-card">
-                    <div class="time-badge">D-14 (9월 초)</div>
-                    <h4 style="margin-bottom: 6px;">Visit Japan Web 등록</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">
-                        - 대표자 1인이 동반 8인 일괄 등록 및 QR 저장
-                    </p>
-                </div>
-                <div class="glass-panel time-card">
-                    <div class="time-badge">D-7 (출발 1주일 전)</div>
-                    <h4 style="margin-bottom: 6px;">환전 & 보험 & 교통비</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">
-                        - 8인 여행자보험 가입<br>- 트래블로그 카드 및 공항 이동수단 확정
-                    </p>
-                </div>
-                <div class="glass-panel time-card">
-                    <div class="time-badge">D-1 (짐 싸기)</div>
-                    <h4 style="margin-bottom: 6px;">최종 점검</h4>
-                    <p style="font-size: 0.85rem; color: var(--text-muted);">
-                        - 면허증 3종, 110V 돼지코, 상비약, 선글라스 챙기기
-                    </p>
-                </div>
-            </div>
-        </section>
-
         <footer>
             🌺 9월 오키나와 8인 대가족 여행 가이드 | Created with Antigravity
         </footer>
@@ -1104,11 +1462,45 @@
         <span>✅</span> <span id="toast-text">영수증 내역이 성공적으로 저장되었습니다!</span>
     </div>
 
+    <!-- Floating Gemini AI Chatbot Button & Modal -->
+    <div class="chat-fab" onclick="openGeminiChatbot()">
+        🔒 💬 Gemini AI 오키나와 비서
+    </div>
+
+    <div class="chat-modal-overlay" id="chat-modal">
+        <div class="chat-window">
+            <div class="chat-header">
+                <h3>🤖 Gemini AI 오키나와 여행 가이드</h3>
+                <button class="chat-close-btn" onclick="closeGeminiChatbot()">&times;</button>
+            </div>
+            
+            <div class="chat-body" id="chat-messages">
+                <div class="chat-msg bot">
+                    안녕하세요! 🌺 오키나와 8인 대가족 여행을 돕는 <strong>Gemini AI 가이드 비서</strong>입니다.<br><br>
+                    3박 4일 일정, 긴초 숙소 맛집, 츄라우미 수족관 팁, 날씨, 예산 등 무엇이든 물어보세요!
+                </div>
+            </div>
+
+            <div class="chip-container">
+                <button class="chip-btn" onclick="sendQuickQuestion('1일차 긴초 저녁 맛집 추천해 줘')">💡 1일차 긴초 저녁 맛집</button>
+                <button class="chip-btn" onclick="sendQuickQuestion('2일차 아침 장보기 마트 팁 알려줘')">💡 2일차 아침 장보기 팁</button>
+                <button class="chip-btn" onclick="sendQuickQuestion('3일차 A안 대자연 vs B안 쇼핑 차이가 뭐야?')">💡 3일차 A안 vs B안</button>
+                <button class="chip-btn" onclick="sendQuickQuestion('오키나와 필수 8인 준비물 3가지 알려줘')">💡 필수 준비물 3가지</button>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input-text" class="chat-text-input" placeholder="질문을 입력하세요..." onkeypress="handleChatKeyPress(event)">
+                <button class="chat-send-btn" onclick="sendChatMessage()">전송</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Leaflet JS for Map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script>
         const SECRET_PASS = "0916";
+        let isChatbotAuthenticated = false;
 
         // D-Day Counter Calculation
         function initDDay() {
@@ -1133,6 +1525,131 @@
             }, 3500);
         }
 
+        // Day-by-Day Tab Switching
+        function switchDayTab(dayKey, btnEl) {
+            document.querySelectorAll('.day-tab-btn').forEach(b => b.classList.remove('active'));
+            btnEl.classList.add('active');
+
+            ['day1-card', 'day2-card', 'day3-card', 'day4-card'].forEach(cardId => {
+                document.getElementById(cardId).style.display = 'none';
+            });
+
+            document.getElementById(`${dayKey}-card`).style.display = 'block';
+        }
+
+        // Day 3 Option A / B Switcher
+        function switchDay3Opt(opt) {
+            const btnA = document.getElementById('btn-opt-a');
+            const btnB = document.getElementById('btn-opt-b');
+            const contentA = document.getElementById('day3-content-a');
+            const contentB = document.getElementById('day3-content-b');
+
+            if (opt === 'a') {
+                btnA.className = 'opt-btn active-a';
+                btnB.className = 'opt-btn';
+                contentA.style.display = 'block';
+                contentB.style.display = 'none';
+            } else {
+                btnA.className = 'opt-btn';
+                btnB.className = 'opt-btn active-b';
+                contentA.style.display = 'none';
+                contentB.style.display = 'block';
+            }
+        }
+
+        // Password Protected Gemini Chatbot Open
+        function openGeminiChatbot() {
+            if (!isChatbotAuthenticated) {
+                const pass = prompt('🔒 가족 비밀번호를 입력하세요:');
+                if (pass === null) return;
+                if (pass.trim() !== SECRET_PASS) {
+                    alert('❌ 비밀번호가 올바르지 않습니다!');
+                    return;
+                }
+                isChatbotAuthenticated = true;
+                showToast('🔓 Gemini AI 가이드 비서가 인증되었습니다!');
+            }
+            document.getElementById('chat-modal').classList.add('open');
+        }
+
+        function closeGeminiChatbot() {
+            document.getElementById('chat-modal').classList.remove('open');
+        }
+
+        function handleChatKeyPress(e) {
+            if (e.key === 'Enter') sendChatMessage();
+        }
+
+        function sendQuickQuestion(qText) {
+            document.getElementById('chat-input-text').value = qText;
+            sendChatMessage();
+        }
+
+        function sendChatMessage() {
+            const inputEl = document.getElementById('chat-input-text');
+            const msg = inputEl.value.trim();
+            if (!msg) return;
+
+            appendChatMsg(msg, 'user');
+            inputEl.value = '';
+
+            setTimeout(() => {
+                const botReply = generateGeminiResponse(msg);
+                appendChatMsg(botReply, 'bot');
+            }, 600);
+        }
+
+        function appendChatMsg(text, sender) {
+            const container = document.getElementById('chat-messages');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `chat-msg ${sender}`;
+            msgDiv.innerHTML = text;
+            container.appendChild(msgDiv);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Knowledge Engine for Gemini AI Chatbot
+        function generateGeminiResponse(query) {
+            const q = query.toLowerCase();
+
+            if (q.includes('긴초') || q.includes('1일차') || q.includes('저녁') || q.includes('킹타코스')) {
+                return `🍱 <strong>1일차 긴초(Kincho) 숙소 주변 추천 저녁:</strong><br><br>
+                1. <strong>King Tacos (킹타코스 본점):</strong> 오키나와 명물 타코라이스 원조! 양이푸짐하고 테이크아웃해서 숙소에서 먹기 최고입니다.<br>
+                2. <strong>Il Mattarello:</strong> 화덕 피자 및 수제 파스타 전문점으로 부모님과 아이들 모두 좋아합니다.<br>
+                3. <strong>ALOHA burger / 66 Diner:</strong> 육즙 가득 수제 버거를 즐기실 수 있습니다.`;
+            }
+
+            if (q.includes('2일차') || q.includes('아침') || q.includes('마트') || q.includes('장보기')) {
+                return `🛒 <strong>2일차 아침 장보기 추천 꿀팁:</strong><br><br>
+                - <strong>긴초 San-A / 맥스밸류 마트:</strong> 즉석 미소된장국, 햇반, 조미김, 계란말이, 오키나와식 두부(지마미두부/유시두부), 과일, 우유, 오키나와 소시지 구이 추천!<br>
+                - <strong>편의점 (로손/세븐):</strong> 타마고(계란) 샌드위치와 오니기리 주먹밥이 아주 맛있습니다.`;
+            }
+
+            if (q.includes('3일차') || q.includes('a안') || q.includes('b안') || q.includes('다이세키린잔') || q.includes('라이카무')) {
+                return `🌿 <strong>3일차 A안 vs B안 완벽 비교:</strong><br><br>
+                - <strong>[A안 - 대자연]:</strong> 다이세키린잔 20분 평탄 데크길로 걷기 좋으며, 항구 바로 앞 생선요리 맛집 <i>쿠니가미 미나토 쇼쿠도</i>(14시 마감)에서 기가 막힌 점심을 드실 수 있습니다.<br>
+                - <strong>[B안 - 쇼핑/실내]:</strong> 쾌적한 에어컨 실내인 <i>이온몰 오키나와 라이카무</i>에서 포켓몬센터 구경 및 푸드코트 점심을 즐깁니다.`;
+            }
+
+            if (q.includes('준비물') || q.includes('서류') || q.includes('면허')) {
+                return `📋 <strong>8인 대가족 필수 핵심 준비물 3가지:</strong><br><br>
+                1. <strong>운전자 2명 서류 3종:</strong> 국제운전면허증 + 한국 면허증 원본 + 여권 (실물 필수!)<br>
+                2. <strong>110V 돼지코 & 렌터카 거치대:</strong> 차량 2대 및 숙소 카메라/스마트폰 충전용<br>
+                3. <strong>상비약 & 스노클링 장비:</strong> 어린이 해열제, 소화제 및 해변 산호 상처 예방 아쿠아슈즈`;
+            }
+
+            if (q.includes('날씨') || q.includes('스콜') || q.includes('9월')) {
+                return `🌤️ <strong>9월 오키나와 날씨 가이드:</strong><br><br>
+                - 낮 기온 30도 이상으로 쾌청하고 해수욕하기 완벽하지만 자외선이 매우 강합니다.<br>
+                - 갑작스러운 스콜(소나기)이 올 수 있으니 접이식 양우산을 차에 비치하세요!`;
+            }
+
+            return `🌺 <strong>Gemini AI 답변:</strong><br><br>
+            질문하신 "<strong>${query}</strong>"에 대한 안내입니다.<br>
+            8인 대가족 3박 4일 일정은 1일차 나하/긴초 ➔ 2일차 츄라우미 ➔ 3일차 대자연/쇼핑 ➔ 4일차 우미카지테라스로 완벽하게 구성되어 있습니다.<br>
+            상단 탭이나 가계부, 준비물 체크리스트를 통해 더 자세한 내용을 확인해 보세요!`;
+        }
+
         // Utility: Format Number with Commas
         function formatCommas(num) {
             if (num === null || num === undefined || isNaN(num) || num === '') return '';
@@ -1148,7 +1665,7 @@
         // Budget Items Master Config
         const budgetCategories = [
             { id: 'flight', item: '✈️ 항공권 (8인 왕복)', detail: '8인 항공권 (예약 완료)', expected: 2400000 },
-            { id: 'hotel', item: '🏨 숙소 (3박 8인)', detail: '3박 8인 숙소 (예약 완료)', expected: 1800000 },
+            { id: 'hotel', item: '🏨 숙소 (3박 8인)', detail: '3박 8인 긴초 숙소 (예약 완료)', expected: 1800000 },
             { id: 'airport_transit', item: '🚌 한국 ➔ 공항 왕복 교통비', detail: '8인 공항리무진 / 주차장 2대+유류비', expected: 220000 },
             { id: 'rental_car', item: '🚗 오키나와 렌터카 (2대)', detail: '3박 4일 렌터카 2대 + 면책보험', expected: 450000 },
             { id: 'gas_toll', item: '⛽ 기름값 + 톨비 + 주차비', detail: '2대 합산 (주유 1회/대당, 맵코드 주차)', expected: 135000 },
@@ -1159,7 +1676,7 @@
 
         // Multi-receipt Data Structure
         let receiptStore = {
-            receipts: {}, // { 'flight': [{ amount: 1200000, memo: '본인 결제' }, { amount: 1200000, memo: '처제 결제' }] }
+            receipts: {},
             lastSaved: null
         };
 
@@ -1171,7 +1688,6 @@
             const blocksHtml = budgetCategories.map(cat => {
                 overallExpected += cat.expected;
 
-                // Migration handling for legacy single-item format
                 if (!receiptStore.receipts[cat.id]) {
                     if (receiptStore.actuals && receiptStore.actuals[cat.id] !== undefined) {
                         receiptStore.receipts[cat.id] = [{
@@ -1246,7 +1762,6 @@
 
             container.innerHTML = blocksHtml;
 
-            // Render Overall Summary
             const overallDiff = overallActual > 0 ? overallActual - overallExpected : null;
             let overallDiffText = '';
             if (overallDiff !== null) {
@@ -1263,7 +1778,6 @@
                 <div>${overallDiffText}</div>
             `;
 
-            // Last Saved Time Label
             const lastSavedEl = document.getElementById('last-saved-time');
             if (receiptStore.lastSaved) {
                 lastSavedEl.innerText = `마지막 저장: ${receiptStore.lastSaved}`;
@@ -1291,7 +1805,6 @@
             const currentNum = parseNum(receiptStore.receipts[catId][idx].amount);
             const newNum = currentNum + addVal;
             receiptStore.receipts[catId][idx].amount = newNum;
-            
             renderBudgetCategories();
         }
 
@@ -1414,20 +1927,19 @@
         let markersGroup;
 
         const mainAttractions = [
+            { name: "🏠 긴초 3박 숙소 (Kincho)", lat: 26.4560, lng: 127.9220 },
             { name: "🐋 츄라우미 수족관", lat: 26.6944, lng: 127.8779 },
-            { name: "🏝️ 코우리 대교", lat: 26.6961, lng: 128.0245 },
-            { name: "🐘 만좌모", lat: 26.5049, lng: 127.8502 },
-            { name: "🎡 아메리칸 빌리지", lat: 26.3164, lng: 127.7577 },
+            { name: "🌳 다이세키린잔", lat: 26.8330, lng: 128.2530 },
+            { name: "🎡 아메리칸 빌리지 / 잔파곶", lat: 26.3164, lng: 127.7577 },
             { name: "🛍️ 이온몰 라이카무", lat: 26.3142, lng: 127.7958 },
-            { name: "🛍️ 나하 국제거리", lat: 26.2144, lng: 127.6844 },
+            { name: "🥞 세나가섬 우미카지테라스", lat: 26.1756, lng: 127.6408 },
             { name: "✈️ 나하 국제공항", lat: 26.2064, lng: 127.6465 }
         ];
 
         const presets = {
-            chatan: { name: "중부 차탄 (아메리칸빌리지)", lat: 26.3164, lng: 127.7577 },
-            onna: { name: "중북부 은나 (선마리나/만좌모)", lat: 26.5049, lng: 127.8502 },
-            naha: { name: "남부 나하 (국제거리 주변)", lat: 26.2144, lng: 127.6844 },
-            motobu: { name: "북부 모토부 (츄라우미 주변)", lat: 26.6944, lng: 127.8779 }
+            kincho: { name: "긴초 숙소 (Kincho)", lat: 26.4560, lng: 127.9220 },
+            motobu: { name: "북부 모토부 (츄라우미 주변)", lat: 26.6944, lng: 127.8779 },
+            naha: { name: "남부 나하 (공항/국제거리)", lat: 26.2144, lng: 127.6844 }
         };
 
         function initMap() {
@@ -1439,7 +1951,7 @@
             }).addTo(map);
 
             markersGroup = L.layerGroup().addTo(map);
-            updateHotelLocation(presets.chatan.lat, presets.chatan.lng, presets.chatan.name);
+            updateHotelLocation(presets.kincho.lat, presets.kincho.lng, presets.kincho.name);
         }
 
         function presetLocation(key) {
@@ -1460,12 +1972,12 @@
                         const first = data[0];
                         updateHotelLocation(parseFloat(first.lat), parseFloat(first.lon), query);
                     } else {
-                        alert('주소를 찾을 수 없어 기본 차탄 위치로 설정합니다.');
-                        updateHotelLocation(presets.chatan.lat, presets.chatan.lng, query);
+                        alert('주소를 찾을 수 없어 기본 긴초 위치로 설정합니다.');
+                        updateHotelLocation(presets.kincho.lat, presets.kincho.lng, query);
                     }
                 })
                 .catch(() => {
-                    updateHotelLocation(presets.chatan.lat, presets.chatan.lng, query);
+                    updateHotelLocation(presets.kincho.lat, presets.kincho.lng, query);
                 });
         }
 
@@ -1485,7 +1997,7 @@
 
             const hotelIcon = L.divIcon({
                 className: 'custom-div-icon',
-                html: `<div style="background-color:#ff6b6b; color:#fff; font-weight:800; padding:6px 10px; border-radius:20px; font-size:12px; border:2px solid #fff; white-space:nowrap; box-shadow:0 4px 10px rgba(0,0,0,0.5);">🏠 지정 숙소 [${name}]</div>`,
+                html: `<div style="background-color:#ff6b6b; color:#fff; font-weight:800; padding:6px 10px; border-radius:20px; font-size:12px; border:2px solid #fff; white-space:nowrap; box-shadow:0 4px 10px rgba(0,0,0,0.5);">🏠 지정 위치 [${name}]</div>`,
                 iconSize: [140, 30],
                 iconAnchor: [70, 15]
             });
