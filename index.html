@@ -376,18 +376,68 @@
         .dist-card h4 { font-size: 0.95rem; color: var(--accent-teal); margin-bottom: 4px; }
         .dist-card p { font-size: 0.85rem; color: var(--text-muted); }
 
-        /* Budget Section & Interactive Input */
+        /* Budget Section & Interactive Input & Save Controls */
         .budget-box { padding: 25px; margin-bottom: 40px; }
+
+        .budget-control-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 14px 18px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-glass);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 10px 18px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-save { background: linear-gradient(135deg, var(--accent-emerald), #05b383); color: #021a12; }
+        .btn-save:hover { opacity: 0.9; transform: translateY(-2px); }
+
+        .btn-load { background: rgba(0, 210, 255, 0.2); color: var(--accent-ocean); border: 1px solid rgba(0, 210, 255, 0.4); }
+        .btn-load:hover { background: rgba(0, 210, 255, 0.3); }
+
+        .btn-export { background: rgba(255, 209, 102, 0.2); color: var(--accent-gold); border: 1px solid rgba(255, 209, 102, 0.4); }
+        .btn-export:hover { background: rgba(255, 209, 102, 0.3); }
+
+        .btn-reset { background: rgba(255, 107, 107, 0.15); color: var(--accent-coral); border: 1px solid rgba(255, 107, 107, 0.3); }
+        .btn-reset:hover { background: rgba(255, 107, 107, 0.25); }
+
+        .last-saved-info {
+            font-size: 0.82rem;
+            color: var(--accent-teal);
+            font-weight: 600;
+        }
 
         .budget-table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.95rem;
+            margin-top: 10px;
+            font-size: 0.93rem;
         }
 
         .budget-table th, .budget-table td {
-            padding: 12px 15px;
+            padding: 12px 14px;
             text-align: left;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
@@ -396,9 +446,9 @@
         .budget-table tr:hover { background: rgba(255, 255, 255, 0.03); }
 
         .actual-input {
-            width: 130px;
-            padding: 6px 10px;
-            background: rgba(0, 0, 0, 0.4);
+            width: 120px;
+            padding: 7px 10px;
+            background: rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(0, 210, 255, 0.4);
             border-radius: 6px;
             color: var(--accent-emerald);
@@ -407,7 +457,19 @@
             outline: none;
         }
 
-        .actual-input:focus {
+        .memo-input {
+            width: 100%;
+            max-width: 220px;
+            padding: 6px 10px;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid var(--border-glass);
+            border-radius: 6px;
+            color: var(--text-main);
+            font-size: 0.82rem;
+            outline: none;
+        }
+
+        .memo-input:focus, .actual-input:focus {
             border-color: var(--accent-teal);
             box-shadow: 0 0 8px rgba(0, 242, 254, 0.4);
         }
@@ -422,6 +484,33 @@
         .diff-text { font-size: 0.85rem; font-weight: 700; }
         .diff-minus { color: var(--accent-emerald); }
         .diff-plus { color: var(--accent-coral); }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--accent-emerald), #05b383);
+            color: #021a12;
+            padding: 14px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 800;
+            font-size: 0.95rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 9999;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
 
         /* Checklist Section */
         .checklist-box { padding: 25px; margin-bottom: 40px; }
@@ -787,13 +876,26 @@
             </div>
         </section>
 
-        <!-- 5. 8인 3박 4일 예산안 & 실제 사용 금액 가계부 -->
+        <!-- 5. 8인 3박 4일 예산안 & 실제 사용 금액 가계부 (Save & Load Features) -->
         <section style="margin-bottom: 45px;">
-            <h2 class="section-title">💰 8인 3박 4일 예산 및 실제 지출 가계부</h2>
+            <h2 class="section-title">💰 8인 3박 4일 가계부 & 영수증 정보 저장/불러오기</h2>
             
             <div class="glass-panel budget-box">
-                <p style="color: var(--text-muted); font-size: 0.92rem; margin-bottom: 15px;">
-                    * 8인 대가족 기준 3박 4일 예상 금액 및 <strong>실제 지출 금액을 직접 입력</strong>해 보세요 (자동 합산 & 로컬 저장).
+                <!-- Action Control Bar -->
+                <div class="budget-control-bar">
+                    <div class="btn-group">
+                        <button class="action-btn btn-save" onclick="saveReceiptData()">💾 지출/영수증 저장하기</button>
+                        <button class="action-btn btn-load" onclick="loadReceiptData(true)">📂 저장된 내역 불러오기</button>
+                        <button class="action-btn btn-export" onclick="exportReceiptJSON()">📥 백업 파일 다운로드</button>
+                        <button class="action-btn btn-load" onclick="triggerImportFileInput()">📤 백업 파일 로딩</button>
+                        <input type="file" id="import-file-input" accept=".json" style="display:none;" onchange="importReceiptJSON(event)">
+                        <button class="action-btn btn-reset" onclick="resetReceiptData()">🔄 초기화</button>
+                    </div>
+                    <div class="last-saved-info" id="last-saved-time">마지막 저장: 없음</div>
+                </div>
+
+                <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">
+                    * 실제 사용한 금액과 영수증 메모(구매장소/카드 등)를 작성하신 후 <strong>[💾 지출/영수증 저장하기]</strong> 버튼을 누르시면 브라우저에 안심 저장됩니다.
                 </p>
 
                 <table class="budget-table">
@@ -802,7 +904,8 @@
                             <th>항목</th>
                             <th>상세 내역</th>
                             <th>예상 금액 (원화)</th>
-                            <th>실제 지출 금액 (원화 입력)</th>
+                            <th>실제 지출 금액 (원화)</th>
+                            <th>영수증 메모 / 비고</th>
                             <th>차액 (예산 대비)</th>
                         </tr>
                     </thead>
@@ -818,7 +921,7 @@
             <h2 class="section-title">📋 8인 대가족 준비물 체크리스트</h2>
             
             <div class="glass-panel checklist-box">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div style="display: flex; justify-content: space-between; align- items: center;">
                     <span style="font-weight: 700; color: var(--accent-teal);">준비 진행률</span>
                     <span id="progress-text" style="font-weight: 800; color: var(--accent-emerald);">0% (0/0)</span>
                 </div>
@@ -879,6 +982,11 @@
         </footer>
     </div>
 
+    <!-- Toast Component -->
+    <div id="toast-message" class="toast">
+        <span>✅</span> <span id="toast-text">영수증 내역이 성공적으로 저장되었습니다!</span>
+    </div>
+
     <!-- Leaflet JS for Map -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
@@ -896,7 +1004,17 @@
             else el.innerText = `D+${Math.abs(diffDays)}`;
         }
 
-        // Budget Items Data with Actual Inputs
+        // Toast Notification System
+        function showToast(msg) {
+            const toast = document.getElementById('toast-message');
+            document.getElementById('toast-text').innerText = msg;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Budget & Receipt Items Data
         const initialBudgetData = [
             { id: 'flight', item: '✈️ 항공권 (8인 왕복)', detail: '8인 항공권 (예약 완료)', expected: 2400000 },
             { id: 'hotel', item: '🏨 숙소 (3박 8인)', detail: '3박 8인 숙소 (예약 완료)', expected: 1800000 },
@@ -908,7 +1026,11 @@
             { id: 'shopping', item: '🛍️ 쇼핑 & 예비비', detail: '돈키호테/선물/비상금', expected: 360000 }
         ];
 
-        let actualSpentData = JSON.parse(localStorage.getItem('okinawa_budget_actual') || '{}');
+        let receiptStore = {
+            actuals: {},
+            memos: {},
+            lastSaved: null
+        };
 
         function renderBudgetTable() {
             const tbody = document.getElementById('budget-table-body');
@@ -917,11 +1039,14 @@
 
             const rowsHtml = initialBudgetData.map(row => {
                 totalExpected += row.expected;
-                const actual = actualSpentData[row.id] !== undefined ? actualSpentData[row.id] : '';
-                const actualVal = Number(actual) || 0;
-                if (actual !== '') totalActual += actualVal;
+                const actualValRaw = receiptStore.actuals[row.id];
+                const actual = actualValRaw !== undefined && actualValRaw !== null ? actualValRaw : '';
+                const memo = receiptStore.memos[row.id] || '';
 
-                const diff = actual !== '' ? actualVal - row.expected : null;
+                const actualValNum = Number(actual) || 0;
+                if (actual !== '') totalActual += actualValNum;
+
+                const diff = actual !== '' ? actualValNum - row.expected : null;
                 let diffHtml = '-';
                 if (diff !== null) {
                     if (diff <= 0) {
@@ -933,11 +1058,14 @@
 
                 return `
                     <tr>
-                        <td>${row.item}</td>
+                        <td><strong>${row.item}</strong></td>
                         <td style="color:var(--text-muted); font-size:0.88rem;">${row.detail}</td>
                         <td>₩${row.expected.toLocaleString()}</td>
                         <td>
-                            <input type="number" class="actual-input" placeholder="0" value="${actual}" oninput="updateActualCost('${row.id}', this.value)"> 원
+                            <input type="number" class="actual-input" id="input-actual-${row.id}" placeholder="0" value="${actual}" oninput="onBudgetInputChange('${row.id}')"> 원
+                        </td>
+                        <td>
+                            <input type="text" class="memo-input" id="input-memo-${row.id}" placeholder="예: 세븐일레븐 현금/결제장소" value="${memo}" oninput="onBudgetInputChange('${row.id}')">
                         </td>
                         <td>${diffHtml}</td>
                     </tr>
@@ -959,19 +1087,120 @@
                     <td colspan="2">합계 (Total)</td>
                     <td>₩${totalExpected.toLocaleString()}</td>
                     <td>₩${totalActual > 0 ? totalActual.toLocaleString() : 0}</td>
+                    <td>-</td>
                     <td>${totalDiffHtml}</td>
                 </tr>
             `;
 
             tbody.innerHTML = rowsHtml + totalRow;
+
+            // Update Last Saved Text
+            const lastSavedEl = document.getElementById('last-saved-time');
+            if (receiptStore.lastSaved) {
+                lastSavedEl.innerText = `마지막 저장: ${receiptStore.lastSaved}`;
+            } else {
+                lastSavedEl.innerText = `마지막 저장: 없음`;
+            }
         }
 
-        function updateActualCost(id, val) {
-            if (val === '') delete actualSpentData[id];
-            else actualSpentData[id] = Number(val);
+        function onBudgetInputChange(id) {
+            const actualVal = document.getElementById(`input-actual-${id}`).value;
+            const memoVal = document.getElementById(`input-memo-${id}`).value;
 
-            localStorage.setItem('okinawa_budget_actual', JSON.stringify(actualSpentData));
+            if (actualVal === '') delete receiptStore.actuals[id];
+            else receiptStore.actuals[id] = Number(actualVal);
+
+            receiptStore.memos[id] = memoVal;
+
+            // Auto calculate live totals without rewriting input focus
+            updateTotalsOnly();
+        }
+
+        function updateTotalsOnly() {
+            let totalExpected = 0;
+            let totalActual = 0;
+
+            initialBudgetData.forEach(row => {
+                totalExpected += row.expected;
+                const val = receiptStore.actuals[row.id];
+                if (val !== undefined && val !== null && val !== '') {
+                    totalActual += Number(val);
+                }
+            });
+
+            // Re-render whole table to update diff columns
             renderBudgetTable();
+        }
+
+        function saveReceiptData() {
+            const now = new Date();
+            receiptStore.lastSaved = now.getFullYear() + '-' +
+                String(now.getMonth() + 1).padStart(2, '0') + '-' +
+                String(now.getDate()).padStart(2, '0') + ' ' +
+                String(now.getHours()).padStart(2, '0') + ':' +
+                String(now.getMinutes()).padStart(2, '0') + ':' +
+                String(now.getSeconds()).padStart(2, '0');
+
+            localStorage.setItem('okinawa_receipt_store_v2', JSON.stringify(receiptStore));
+            renderBudgetTable();
+            showToast('💾 영수증 정보가 성공적으로 저장되었습니다!');
+        }
+
+        function loadReceiptData(showNotification = false) {
+            const saved = localStorage.getItem('okinawa_receipt_store_v2');
+            if (saved) {
+                receiptStore = JSON.parse(saved);
+                renderBudgetTable();
+                if (showNotification) showToast('📂 저장된 영수증 정보가 로딩되었습니다!');
+            } else {
+                if (showNotification) showToast('⚠️ 저장된 영수증 내역이 없습니다.');
+            }
+        }
+
+        function resetReceiptData() {
+            if (confirm('정말로 작성한 영수증/지출 내역을 초기화하시겠습니까?')) {
+                receiptStore = { actuals: {}, memos: {}, lastSaved: null };
+                localStorage.removeItem('okinawa_receipt_store_v2');
+                renderBudgetTable();
+                showToast('🔄 영수증 내역이 초기화되었습니다.');
+            }
+        }
+
+        function exportReceiptJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(receiptStore, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `okinawa_receipts_${new Date().toISOString().slice(0,10)}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('📥 백업 파일(JSON) 다운로드 완료!');
+        }
+
+        function triggerImportFileInput() {
+            document.getElementById('import-file-input').click();
+        }
+
+        function importReceiptJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (imported && (imported.actuals || imported.memos)) {
+                        receiptStore = imported;
+                        saveReceiptData();
+                        showToast('📤 백업 파일에서 영수증 정보를 불러왔습니다!');
+                    } else {
+                        alert('올바른 백업 파일 형식이 아닙니다.');
+                    }
+                } catch (err) {
+                    alert('파일 파싱 중 오류가 발생했습니다.');
+                }
+            };
+            reader.readAsText(file);
         }
 
         // Map & Locations Setup (Google Korean Tile Layer)
@@ -998,7 +1227,6 @@
         function initMap() {
             map = L.map('map-container').setView([26.45, 127.8], 10);
 
-            // Google Maps Korean Tile Layer (hl=ko for full Korean translated map tiles)
             L.tileLayer('https://mt1.google.com/vt/lyrs=m&x={x}&y={y}&z={z}&hl=ko', {
                 attribution: '&copy; Google Maps (한국어 표기 지적 지도)',
                 maxZoom: 20
@@ -1049,7 +1277,6 @@
         function updateHotelLocation(lat, lng, name) {
             markersGroup.clearLayers();
 
-            // Hotel Red Marker
             const hotelIcon = L.divIcon({
                 className: 'custom-div-icon',
                 html: `<div style="background-color:#ff6b6b; color:#fff; font-weight:800; padding:6px 10px; border-radius:20px; font-size:12px; border:2px solid #fff; white-space:nowrap; box-shadow:0 4px 10px rgba(0,0,0,0.5);">🏠 지정 숙소 [${name}]</div>`,
@@ -1058,7 +1285,6 @@
             });
             L.marker([lat, lng], { icon: hotelIcon }).addTo(markersGroup);
 
-            // Attractions Teal Markers
             const distanceCardsData = mainAttractions.map(attr => {
                 const attrIcon = L.divIcon({
                     className: 'custom-div-icon',
@@ -1151,7 +1377,7 @@
         // Initialize Page
         window.addEventListener('DOMContentLoaded', () => {
             initDDay();
-            renderBudgetTable();
+            loadReceiptData(false); // Auto load receipt data if stored
             initMap();
             renderChecklist();
         });
